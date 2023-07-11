@@ -11,6 +11,7 @@ const Page = async () => {
 			{data.length} <NotionAuthBtn />
 		</div>
 	)
+
 	return (
 		<div className={'col justify-center align-middle  '}>
 			<div className={'flex justify-center p-2'}>

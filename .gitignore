@@ -43,6 +43,8 @@ pnpm-lock.yaml
 
 # prisma
 prisma/client
+#prisma/migrations
+prisma/dev.db
 
 # test
 src/tests/read-json/*.json
