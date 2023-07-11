@@ -1,6 +1,5 @@
 import { WakaTimeClient } from 'shared/lib/waka/waka'
 import { formatDate } from 'shared/lib/date'
-import { waka_key } from 'shared/config/key'
 
 import { NextResponse } from 'next/server'
 

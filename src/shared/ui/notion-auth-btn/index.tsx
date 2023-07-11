@@ -1,15 +1,13 @@
 import type { FC } from 'react'
 
-import style from './style.module.scss'
+import { REDIRECT_URI } from 'shared/config/env'
 
 interface NotionAuthBtnProps {}
 
 export const NotionAuthBtn: FC<NotionAuthBtnProps> = () => {
 	return (
-		<a className={'text-white bg-gray-500 px-3 py-2 rounded no-underline'} href={redirectUri}>
+		<a className={'text-white bg-gray-500 px-3 py-2 rounded no-underline'} href={REDIRECT_URI}>
 			Auth Notion
 		</a>
 	)
 }
-
-const redirectUri = process.env.NEXT_OAUTH_REDIRECT_URI

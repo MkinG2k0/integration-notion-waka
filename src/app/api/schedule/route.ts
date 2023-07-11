@@ -9,13 +9,14 @@ import { cookies } from 'next/headers'
 
 export const POST = async (request: Request, response: Response) => {
 	const cookieStore = cookies()
+
 	const req = await request.json<{
 		notionId?: string
 		notionToken?: string
 	}>()
 
-	const notionId = cookieStore.get('notion-id')?.value || req.notionId || ''
-	const auth = cookieStore.get('notion-token')?.value || req.notionToken || ''
+	const notionId = cookieStore.get('notion-id')?.value || req?.notionId || ''
+	const auth = cookieStore.get('notion-token')?.value || req?.notionToken || ''
 
 	const user = await prisma.user.findUnique({
 		select: { id: true, notion: true, waka: true },

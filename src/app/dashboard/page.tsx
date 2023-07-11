@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 const Page = () => {
 	const onSyncDay = () => {
-		http.post('schedule')
+		http.post('schedule', {})
 	}
 
 	return (

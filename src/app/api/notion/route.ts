@@ -1,9 +1,9 @@
+import { CLIENT_SECRET } from 'shared/config/env'
+
 import { NextResponse } from 'next/server'
 import { Client } from '@notionhq/client'
 import { cookies } from 'next/headers'
 import dayjs from 'dayjs'
-
-const NOTION_KEY = process.env.NEXT_OAUTH_CLIENT_SECRET
 
 export const GET = async (request: Request) => {
 	const { searchParams } = new URL(request.url)
@@ -50,7 +50,7 @@ export const DELETE = async (request: Request, response: Response) => {
 		})
 	}
 
-	const notionClient = new Client({ auth: NOTION_KEY })
+	const notionClient = new Client({ auth: CLIENT_SECRET })
 
 	const data = await notionClient.pages.update({
 		archived: true,

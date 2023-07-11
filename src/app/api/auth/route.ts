@@ -1,5 +1,6 @@
 import { ResNotionAuth } from 'app/api/auth/type'
 
+import { BASE_URL, CLIENT_ID, CLIENT_SECRET } from 'shared/config/env'
 import { Api } from 'shared/interface/api'
 import { prisma } from 'shared/prisma'
 
@@ -9,16 +10,14 @@ import { Client } from '@notionhq/client'
 import { cookies } from 'next/headers'
 import axios from 'axios'
 
-const clientId = process.env.NEXT_OAUTH_CLIENT_ID
-const clientSecret = process.env.NEXT_OAUTH_CLIENT_SECRET
-const redirect_uri = process.env.NEXT_PUBLIC_URL.concat('auth')
+const redirect_uri = BASE_URL.concat('auth')
 
 export const POST = async (request: Request) => {
 	const { searchParams } = new URL(request.url)
 	const code = searchParams.get('code')
 	const cookieStore = cookies()
 
-	const encoded = Buffer.from(`${clientId}:${clientSecret}`).toString('base64')
+	const encoded = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')
 
 	const data = await axios
 		.post(

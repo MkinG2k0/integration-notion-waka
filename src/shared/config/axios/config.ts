@@ -1,5 +1,7 @@
+import { BASE_API } from 'shared/config/env'
+
 export const AxiosConfig = {
-	baseURL: process.env.NEXT_PUBLIC_URL_ENDPOINT,
+	baseURL: BASE_API,
 	headers: {
 		Accept: 'application/json',
 		'Content-Type': 'application/json',
