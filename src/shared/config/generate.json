@@ -1,0 +1,70 @@
+{
+  "templates": {
+    "ui": {
+      "template": "src/shared/templates/comp",
+      "generate": "src/shared/ui/"
+    },
+    "slice": {
+      "template": "src/shared/templates/slice",
+      "generate": "src/*/"
+    },
+    "page-ssr": {
+      "template": "src/shared/templates/ssr-page",
+      "generate": "src/pages/*/"
+    },
+    "page-ssg": {
+      "template": "src/shared/templates/ssg-page",
+      "generate": "src/pages/*/"
+    },
+    "page": {
+      "template": "src/shared/templates/page",
+      "generate": "src/flat-pages/"
+    },
+    "page-ui": {
+      "template": "src/shared/templates/comp",
+      "generate": "src/flat-pages/*/ui/"
+    },
+    "wid": {
+      "template": "src/shared/templates/widget",
+      "generate": "src/widget/"
+    },
+    "wid-ui": {
+      "template": "src/shared/templates/comp",
+      "generate": "src/widget/*/ui/"
+    },
+    "wid-api": {
+      "template": "src/shared/templates/api",
+      "generate": "src/widget/*/api"
+    },
+    "ent": {
+      "template": "src/shared/templates/entities",
+      "generate": "src/entities/"
+    },
+    "ent-ui": {
+      "template": "src/shared/templates/comp",
+      "generate": "src/entities/*/ui/"
+    },
+    "ent-api": {
+      "template": "src/shared/templates/api",
+      "generate": "src/entities/*/api"
+    },
+    "feat-api": {
+      "template": "src/shared/templates/api",
+      "generate": "src/features/*/api"
+    },
+    "feat": {
+      "template": "src/shared/templates/feature",
+      "generate": "src/features/"
+    },
+    "feat-ui": {
+      "template": "src/shared/templates/comp",
+      "generate": "src/features/*/ui/"
+    }
+  },
+  "replaceExt": [
+    [
+      "txt",
+      "tsx"
+    ]
+  ]
+}
