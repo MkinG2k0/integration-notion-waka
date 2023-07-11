@@ -40,7 +40,7 @@ export const POST = async (request: Request) => {
 		.catch((err) => err.response.data)
 
 	if ('error' in data) {
-		return NextResponse.json(data)
+		return NextResponse.json({ data, redirect_uri })
 	}
 
 	const date = new Date()
