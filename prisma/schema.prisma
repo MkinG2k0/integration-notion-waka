@@ -1,35 +1,37 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "./client"
+	provider = "prisma-client-js"
+	output   = "./client"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+	provider          = "postgresql"
+	url               = env("DATABASE_URL")
+	directUrl         = env("DIRECT_URL")
+	shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model User {
-  id          Int     @id @default(autoincrement())
-  notionId    String  @unique
-  notionToken String  @unique
-  isSchedule  Boolean @default(true)
-  name        String?
-  notion      Notion?
-  waka        Waka?
+	id          Int     @id @default(autoincrement())
+	notionId    String  @unique
+	notionToken String  @unique
+	isSchedule  Boolean @default(true)
+	name        String?
+	notion      Notion?
+	waka        Waka?
 }
 
 model Notion {
-  id         Int     @id @default(autoincrement())
-  calendarId String?
-  projectsId String?
-  languageId String?
-  userId     Int     @unique
-  user       User    @relation(fields: [userId], references: [id])
+	id         Int     @id @default(autoincrement())
+	calendarId String?
+	projectsId String?
+	languageId String?
+	userId     Int     @unique
+	user       User    @relation(fields: [userId], references: [id])
 }
 
 model Waka {
-  id         Int    @id @default(autoincrement())
-  wakaApiKey String @unique
-  userId     Int    @unique
-  user       User   @relation(fields: [userId], references: [id])
+	id         Int    @id @default(autoincrement())
+	wakaApiKey String @unique
+	userId     Int    @unique
+	user       User   @relation(fields: [userId], references: [id])
 }
