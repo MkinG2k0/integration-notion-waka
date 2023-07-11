@@ -11,7 +11,7 @@ import axios from 'axios'
 
 const clientId = process.env.NEXT_OAUTH_CLIENT_ID
 const clientSecret = process.env.NEXT_OAUTH_CLIENT_SECRET
-const redirect_uri = process.env.NEXT_OAUTH_REDIRECT_URI
+const redirect_uri = process.env.NEXT_PUBLIC_URL.concat('auth')
 
 export const POST = async (request: Request) => {
 	const { searchParams } = new URL(request.url)
@@ -26,7 +26,7 @@ export const POST = async (request: Request) => {
 			{
 				code,
 				grant_type: 'authorization_code',
-				redirect_uri: 'http://localhost:3000/auth',
+				redirect_uri,
 			},
 			{
 				headers: {
