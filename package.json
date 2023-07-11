@@ -10,7 +10,7 @@
 		"build": "prisma generate && next build",
 		"init": "npm run prisma:gen && next build",
 		"types": "tsc --noEmit",
-		"prisma:gen": "prisma migrate dev i && prisma db pull && prisma generate",
+		"prisma:gen": "prisma db pull && prisma generate",
 		"start": "next start",
 		"lint": "eslint --fix ./src/**/*.ts*",
 		"prepare": "husky install",
