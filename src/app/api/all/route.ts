@@ -4,8 +4,6 @@ import { http } from 'shared'
 import { NextResponse } from 'next/server'
 
 export const POST = async () => {
-	console.log('---------------------- cron')
-
 	const users = await prisma.user.findMany({ where: { isSchedule: true } })
 
 	const data = await Promise.all(
