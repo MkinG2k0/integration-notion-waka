@@ -11,6 +11,6 @@ export const POST = async () => {
 			async ({ notionId, notionToken }) => await http.post('schedule', { notionId, notionToken })
 		)
 	)
-
+	console.log('ok')
 	return NextResponse.json({ message: 'ok' })
 }
