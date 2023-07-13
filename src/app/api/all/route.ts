@@ -8,8 +8,8 @@ export const POST = async () => {
 
 	const data = await Promise.all(
 		users.map(
-			async ({ notionId, notionToken }) => await http.post('schedule', { notionId, notionToken })
-		)
+			async ({ notionId, notionToken }) => await http.post('schedule', { notionId, notionToken }),
+		),
 	)
 
 	return NextResponse.json({ message: 'ok' })

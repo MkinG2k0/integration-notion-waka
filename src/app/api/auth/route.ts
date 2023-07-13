@@ -18,8 +18,7 @@ export const POST = async (request: Request) => {
 	const cookieStore = cookies()
 
 	const encoded = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')
-	console.log(redirect_uri, '--------------redirect_uri')
-	console.warn(redirect_uri, '--------------redirect_uri')
+
 	const data = await axios
 		.post(
 			'https://api.notion.com/v1/oauth/token',

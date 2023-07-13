@@ -29,8 +29,8 @@ module.exports = {
 	],
 	overrides: [],
 	parser: '@typescript-eslint/parser',
-
-	plugins: ['perfectionist', 'react', '@typescript-eslint', 'jsx-a11y', 'promise', 'prettier'],
+// 'prettier'
+	plugins: ['perfectionist', 'react', '@typescript-eslint', 'jsx-a11y', 'promise', ],
 	rules: {
 		'perfectionist/sort-imports': [
 			'warn',
@@ -96,7 +96,7 @@ module.exports = {
 		'react/jsx-curly-brace-presence': [1, { props: 'always', propElementValues: 'always' }], // фигурные скобки в jsx
 		// 'jsx-quotes': [1, 'prefer-single'], // TODO Err prettier
 		'max-len': [1, { code: 100, tabWidth: 2, comments: 120 }], // Принудительно установите максимальную длину строки
-		'prettier/prettier': [1], // отсупы
+		// 'prettier/prettier': [1], // отсупы
 		'@typescript-eslint/no-empty-function': [1], // пустые функции
 		// 'import/order': [1], // сорировка импортов
 		'no-unused-vars': [1], // не используемые переменные

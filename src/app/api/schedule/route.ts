@@ -46,10 +46,10 @@ export const POST = async (request: Request, response: Response) => {
 							startDate: new Date().toISOString(),
 							title: name,
 						},
-						{ params: { auth, id: calendarId } }
+						{ params: { auth, id: calendarId } },
 					)
 				).data
-			})
+			}),
 		)
 		return data
 	})
