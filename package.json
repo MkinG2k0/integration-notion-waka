@@ -33,6 +33,7 @@
 		"@trpc/next": "^10.34.0",
 		"@trpc/react-query": "^10.34.0",
 		"@trpc/server": "^10.34.0",
+		"@upstash/qstash": "^0.3.6",
 		"@vitejs/plugin-react": "^4.0.2",
 		"antd": "^5.6.4",
 		"axios": "^1.4.0",
