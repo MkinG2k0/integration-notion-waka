@@ -9,7 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 const Page = () => {
 	const searchParams = useSearchParams()
-	const code = searchParams.get('code')
+	const code = searchParams?.get('code')
 	const router = useRouter()
 
 	useEffect(() => {
