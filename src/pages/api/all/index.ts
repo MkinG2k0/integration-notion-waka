@@ -2,9 +2,8 @@ import { prisma } from 'shared/prisma'
 import { http } from 'shared'
 
 import { verifySignature } from '@upstash/qstash/nextjs'
-import { NextResponse } from 'next/server'
 
-const POST = async () => {
+const handler = async (req, res) => {
 	const users = await prisma.user.findMany({ where: { isSchedule: true } })
 
 	const data = await Promise.all(
@@ -13,9 +12,13 @@ const POST = async () => {
 		),
 	)
 
-	return NextResponse.json({ message: 'ok' })
+	res.status(200).end()
 }
 
-const verify = verifySignature(POST)
+export default verifySignature(handler)
 
-export { verify as POST, verify as GET }
+export const config = {
+	api: {
+		bodyParser: false,
+	},
+}
