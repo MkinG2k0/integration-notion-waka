@@ -19,9 +19,3 @@ const POST = async () => {
 const verify = verifySignature(POST)
 
 export { verify as POST, verify as GET }
-
-export const config = {
-	api: {
-		bodyParser: false,
-	},
-}
