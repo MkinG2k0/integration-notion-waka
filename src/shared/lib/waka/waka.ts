@@ -9,15 +9,17 @@ import { WakaTimePayload } from 'shared/lib/waka/types/payload'
 import { rangeQueryParameters } from 'shared/lib/waka/config'
 import { IProjects } from 'shared/lib/waka/types/projects'
 import { IStats } from 'shared/lib/waka/types/stats'
+import { IReq } from 'shared/interface/interfac'
 import { ISummary } from 'shared/lib/waka/types'
+import { Api } from 'shared/interface/api'
 
 import axios, { AxiosInstance } from 'axios'
 
 export class WakaTimeClient {
 	api: AxiosInstance
 
-	constructor(protected apiKey, baseURL = 'https://wakatime.com/api/v1/') {
-		const Authorization = `Basic ${Buffer.from(this.apiKey).toString('base64')}`
+	constructor(public apiKey, baseURL = 'https://wakatime.com/api/v1/') {
+		const Authorization = `Basic ${Buffer.from(apiKey).toString('base64')}`
 
 		this.api = axios.create({
 			baseURL,
@@ -86,7 +88,7 @@ export class WakaTimeClient {
 	async getOrganizationDashboardMemberDurations(payload) {
 		const { dashboardId, memberId, organizationId, userId = 'current' } = payload
 		const { data } = await this.api.get(
-			`users/${userId}/orgs/${organizationId}/dashboards/${dashboardId}/members/${memberId}/durations`
+			`users/${userId}/orgs/${organizationId}/dashboards/${dashboardId}/members/${memberId}/durations`,
 		)
 		return data
 	}
@@ -95,7 +97,7 @@ export class WakaTimeClient {
 		const { dashboardId, memberId, organizationId, userId = 'current' } = payload
 		const { data } = await this.api.get(
 			`users/${userId}/orgs/${organizationId}/` +
-				`dashboards/${dashboardId}/members/${memberId}/summaries`
+				`dashboards/${dashboardId}/members/${memberId}/summaries`,
 		)
 		return data
 	}
@@ -103,7 +105,7 @@ export class WakaTimeClient {
 	async getOrganizationDashboardMembers(payload) {
 		const { dashboardId, organizationId, userId = 'current' } = payload
 		const { data } = await this.api.get(
-			`users/${userId}/orgs/${organizationId}/dashboards/${dashboardId}/members`
+			`users/${userId}/orgs/${organizationId}/dashboards/${dashboardId}/members`,
 		)
 		return data
 	}
@@ -120,8 +122,11 @@ export class WakaTimeClient {
 	}
 
 	async getProjects(payload: WakaTimePayload.Projects) {
-		const { page = 1, userId = 'current' } = payload
-		const { data } = await this.api.get<IProjects>(`users/${userId}/projects?page=${page}`)
+		const { page = 1, q, userId = 'current' } = payload
+		const { data } = await this.api.get<IProjects>(`users/${userId}/projects`, {
+			params: { page, q },
+		})
+
 		return data
 	}
 
@@ -133,6 +138,12 @@ export class WakaTimeClient {
 			params: translateStatsParameters(parameters),
 		})
 
+		return data
+	}
+
+	async getStatusBar(payload?: WakaTimePayload.UserId) {
+		const { userId = 'current' } = payload || {}
+		const { data } = await this.api.get(`users/${userId}/status_bar/today`)
 		return data
 	}
 
@@ -153,7 +164,7 @@ export class WakaTimeClient {
 			`users/${userId}/teams/${teamId}/members/${teamMemberId}/summaries`,
 			{
 				params: translateSummaryParameters(parameters),
-			}
+			},
 		)
 		return data
 	}

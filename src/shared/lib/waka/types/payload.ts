@@ -1,24 +1,25 @@
 import { TRangeKey } from 'shared/lib/waka/config'
 
 export declare namespace WakaTimePayload {
-	interface Projects {
+	interface UserId {
+		userId?: 'current' | string
+	}
+	interface Projects extends UserId {
 		page: number | string
-		userId?: string
+		q?: string
 	}
 
-	interface Summary {
+	interface Summary extends UserId {
 		branchNames?: string[]
 		dateRange: { endDate: string; startDate: string }
 		projectName?: null | string
-		userId?: string
 	}
 
-	interface Stats {
+	interface Stats extends UserId {
 		projectName?: null | string
 		range: TRangeKey
 
 		timeout?: null | string
 		useWritesOnly?: boolean | null
-		userId?: string
 	}
 }

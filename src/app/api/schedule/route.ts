@@ -1,11 +1,11 @@
 import { ReqUserSave } from 'app/api/user/route'
 
 import { ISummary } from 'shared/lib/waka/types'
-import { prisma } from 'shared/prisma'
 import { http } from 'shared'
 
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import { prisma } from 'server/prisma'
 
 export const POST = async (request: Request, response: Response) => {
 	const cookieStore = cookies()

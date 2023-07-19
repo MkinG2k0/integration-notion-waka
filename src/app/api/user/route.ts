@@ -1,7 +1,6 @@
-import { prisma } from 'shared/prisma'
-
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import { prisma } from 'server/prisma'
 
 export interface ReqUserSave {
 	calendarId?: string

@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "./client"
 }
 
 datasource db {
@@ -10,28 +9,44 @@ datasource db {
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
-model User {
-  id          Int     @id @default(autoincrement())
-  notionId    String  @unique
-  notionToken String  @unique
-  isSchedule  Boolean @default(true)
-  name        String?
-  notion      Notion?
-  waka        Waka?
-}
-
 model Notion {
-  id         Int     @id @default(autoincrement())
-  calendarId String?
-  projectsId String?
-  languageId String?
-  userId     Int     @unique
-  user       User    @relation(fields: [userId], references: [id])
+  id               Int              @id @default(autoincrement())
+  databases        NotionDatabase[]
+  pages            NotionPage[]
+  block            NotionBlock[]
+  userId           String           @unique
+  notionDatabaseId Int
+  notionPageId     Int
 }
 
 model Waka {
   id         Int    @id @default(autoincrement())
   wakaApiKey String @unique
-  userId     Int    @unique
-  user       User   @relation(fields: [userId], references: [id])
+  userId     String @unique
+}
+
+model NotionDatabase {
+  id         Int     @id @default(autoincrement())
+  isEnable   Boolean @default(true)
+  databaseId String
+  title      String
+  Notion     Notion? @relation(fields: [notionId], references: [id])
+  notionId   Int?
+}
+
+model NotionBlock {
+  id         Int     @id @default(autoincrement())
+  isEnable   Boolean @default(true)
+  databaseId String
+  title      String
+  Notion     Notion? @relation(fields: [notionId], references: [id])
+  notionId   Int?
+}
+
+model NotionPage {
+  id       Int     @id @default(autoincrement())
+  isEnable Boolean @default(true)
+  pageId   String
+  Notion   Notion? @relation(fields: [notionId], references: [id])
+  notionId Int?
 }

@@ -22,9 +22,7 @@
       "entities/*": [
         "entities/*"
       ],
-      "@prisma/client": [
-        "../prisma/client"
-      ]
+
     },
     "lib": [
       "dom",

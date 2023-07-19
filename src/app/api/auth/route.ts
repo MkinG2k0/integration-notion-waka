@@ -2,11 +2,11 @@ import { ResNotionAuth } from 'app/api/auth/type'
 
 import { BASE_URL, CLIENT_ID, CLIENT_SECRET } from 'shared/config/env'
 import { Api } from 'shared/interface/api'
-import { prisma } from 'shared/prisma'
 
 import { Notion, Waka } from '@prisma/client'
 import { NextResponse } from 'next/server'
 import { Client } from '@notionhq/client'
+import { prisma } from 'server/prisma'
 import { cookies } from 'next/headers'
 import axios from 'axios'
 
@@ -33,7 +33,7 @@ export const POST = async (request: Request) => {
 					Authorization: `Basic ${encoded}`,
 					'Content-Type': 'application/json',
 				},
-			}
+			},
 		)
 		.then<ResNotionAuth>(({ data }) => data)
 		.catch((err) => err.response.data)
