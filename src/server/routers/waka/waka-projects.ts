@@ -1,5 +1,4 @@
-import { isValidApiKey } from 'shared/lib/waka/is-valid-api-key'
-import { ReturnRequest, trpc } from 'shared'
+import { ReturnRequest } from 'shared'
 
 import { privateProcedure, router } from 'server/router'
 import { z } from 'zod'

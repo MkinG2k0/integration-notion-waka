@@ -1,5 +1,5 @@
 import { isValidApiKey } from 'shared/lib/waka/is-valid-api-key'
-import { ReturnRequest, trpc } from 'shared'
+import { ReturnRequest } from 'shared'
 
 import { wakaProjectRouter } from 'server/routers/waka/waka-projects'
 import { privateProcedure, router } from 'server/router'
@@ -20,15 +20,14 @@ export const wakaRouter = router({
 					return ReturnRequest(null, `invalid api "${apiKey}" key`, 'invalid_key')
 				}
 
-				const wakaUpdate = await prisma.waka.update({
-					data: { wakaApiKey: apiKey },
-					where: { userId },
+				const wakaUpdate = await prisma.user.update({
+					data: { wakaTime: { update: { wakaApiKey: apiKey } } },
+					where: { providerAccountId: userId },
 				})
-
 				return ReturnRequest(wakaUpdate, 'updated')
 			}
 
-			const wakaCreate = await prisma.waka.create({ data: { userId, wakaApiKey: apiKey } })
+			const wakaCreate = await prisma.wakaTime.create({ data: { userId, wakaApiKey: apiKey } })
 
 			return ReturnRequest(wakaCreate, 'created')
 		}),
@@ -38,9 +37,12 @@ export const wakaRouter = router({
 		data.dependencies = []
 		return ReturnRequest(data, 'last 7 days stats')
 	}),
-	statusBar: privateProcedure.query(async ({ ctx: { wakaClient }, input }) => {
+	statusBar: privateProcedure.query(async ({ ctx }) => {
+		const { wakaClient } = ctx
+
 		const { data } = await wakaClient.getStatusBar()
+
 		data.dependencies = []
-		return ReturnRequest(data, 'last 7 days stats')
+		return ReturnRequest(data, 'stats now')
 	}),
 })

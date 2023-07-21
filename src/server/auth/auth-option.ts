@@ -1,21 +1,19 @@
+// import { UpstashRedisAdapter } from '@auth/upstash-redis-adapter'
 import { UpstashRedisAdapter } from '@auth/upstash-redis-adapter'
+import { IAccount, UserInit } from 'server/lib/user-init'
+import { PrismaAdapter } from '@auth/prisma-adapter'
 import Notion from '@auth/core/providers/notion'
 import { redis } from 'server/auth/redis'
+// import { redis } from 'server/auth/redis'
 import { AuthOptions } from 'next-auth'
+import { prisma } from 'server/prisma'
 
 export const authOptions: AuthOptions = {
 	// @ts-ignore
 	adapter: UpstashRedisAdapter(redis),
+	// adapter: PrismaAdapter(prisma),
 	callbacks: {
 		async jwt({ account, profile, session, token, user }) {
-			// console.log('------------------jwt')
-			//
-			// console.log(account, 'jwt-account', '\n')
-			// console.log(session, 'jwt-session', '\n')
-			// console.log(token, 'jwt-token', '\n')
-			// console.log(user, 'jwt-user', '\n')
-			// console.log(profile, 'jwt-profile', '\n')
-
 			if (account && token) {
 				const { access_token, providerAccountId } = account
 				const { email, name, picture } = token
@@ -27,12 +25,13 @@ export const authOptions: AuthOptions = {
 			const newSession = session as any
 			newSession.accessToken = token?.accessToken
 			newSession.userId = token?.userId
-			// console.log('------------------session')
-			// newSession.user = user
-			// console.log(session, 'session', '\n')
-			// console.log(token, 'token', '\n')
-			// console.log(user, 'user', '\n')
+
 			return session
+		},
+		async signIn({ account, credentials, email, profile, user }) {
+			await UserInit(account as unknown as IAccount)
+
+			return true
 		},
 	},
 	providers: [
@@ -44,4 +43,5 @@ export const authOptions: AuthOptions = {
 		}),
 	],
 	session: { strategy: 'jwt' },
+	theme: { colorScheme: 'auto' },
 }

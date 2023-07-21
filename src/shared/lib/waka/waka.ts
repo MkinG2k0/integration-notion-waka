@@ -6,11 +6,12 @@ import {
 	translateSummaryParameters,
 } from 'shared/lib/waka/translate-query-parameters'
 import { WakaTimePayload } from 'shared/lib/waka/types/payload'
+import { IStatusBar } from 'shared/lib/waka/types/status-bar'
 import { rangeQueryParameters } from 'shared/lib/waka/config'
 import { IProjects } from 'shared/lib/waka/types/projects'
 import { IStats } from 'shared/lib/waka/types/stats'
-import { IReq } from 'shared/interface/interfac'
 import { ISummary } from 'shared/lib/waka/types'
+import { IReq } from 'shared/interface/interfac'
 import { Api } from 'shared/interface/api'
 
 import axios, { AxiosInstance } from 'axios'
@@ -143,7 +144,7 @@ export class WakaTimeClient {
 
 	async getStatusBar(payload?: WakaTimePayload.UserId) {
 		const { userId = 'current' } = payload || {}
-		const { data } = await this.api.get(`users/${userId}/status_bar/today`)
+		const { data } = await this.api.get<IStatusBar>(`users/${userId}/status_bar/today`)
 		return data
 	}
 

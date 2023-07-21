@@ -14,13 +14,16 @@ export const clients = t.middleware(async ({ ctx, next, path }) => {
 		auth: accessToken,
 	})
 
-	const wakaFind = await prisma.waka.findUnique({ where: { userId } })
+	const wakaFind = await prisma.notion.findUnique({
+		select: { User: { select: { wakaTime: { select: { wakaApiKey: true } } } } },
+		where: { id: userId },
+	})
 
 	if (!wakaFind) {
 		throw new TRPCError({ code: 'NOT_FOUND', message: 'not found waka token' })
 	}
 
-	let wakaKey = wakaFind.wakaApiKey
+	let wakaKey = wakaFind.User.wakaTime
 
 	if (path === 'waka.setToken') {
 		wakaKey = req.body['0'].json.apiKey

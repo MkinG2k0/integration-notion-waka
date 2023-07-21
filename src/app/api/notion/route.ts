@@ -22,7 +22,7 @@ export const GET = async (request: Request) => {
 			{
 				message: 'is not auth',
 			},
-			{ status: 401 }
+			{ status: 401 },
 		)
 	}
 
@@ -82,8 +82,8 @@ export const POST = async (request: Request, response: Response) => {
 		})
 	}
 
-	const time = hours * 60 + minutes
 	const notionClient = new Client({ auth })
+	const time = hours * 60 + minutes
 
 	const formatDate = dayjs(startDate).format('DD/MM/YYYY')
 	const customId = `${title}:${formatDate}`

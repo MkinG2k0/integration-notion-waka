@@ -1,8 +1,7 @@
 import { useEffect } from 'react'
 
-import { trpc } from 'shared'
-
 import { signIn, signOut, useSession } from 'next-auth/react'
+import { trpc } from 'server/lib'
 import { Button } from 'antd'
 const start = new Date()
 
@@ -11,13 +10,12 @@ const end = new Date()
 
 export default function Home() {
 	const { data: session } = useSession()
-	// const { data } = trpc.waka.allProjects.useQuery({
-	// 	// end,
-	// 	// start,
-	// })
-	const { data } = trpc.waka.statusBar.useQuery()
+	const { mutate } = trpc.waka.setToken.useMutation()
 
-	// waka_be04278d-bd71-4e32-a011-0a98f4ccd940
+	useEffect(() => {
+		// fetch('http://localhost:3000/api/test')
+		// mutate({ apiKey: 'waka_7c6dd81f-20bf-4efd-b47a-7bec725b535f' })
+	}, [])
 
 	if (session) {
 		return (

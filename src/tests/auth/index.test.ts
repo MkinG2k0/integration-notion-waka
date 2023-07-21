@@ -23,7 +23,6 @@ it('auth', async () => {
 		},
 		method: 'POST',
 	}).then((data) => data.json())
-	console.log(response)
 })
 
 it('auth client', async () => {
@@ -42,5 +41,4 @@ it('auth client', async () => {
 				message: 'Error',
 			}
 		})
-	console.log(data)
 })

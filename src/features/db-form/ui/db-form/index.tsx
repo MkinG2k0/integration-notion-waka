@@ -2,8 +2,6 @@
 
 import { FC, ReactNode, useState } from 'react'
 
-import { GetAuthData } from 'app/api/auth/route'
-
 import { http } from 'shared'
 
 import {
@@ -24,7 +22,7 @@ import { DatePicker } from 'antd/lib'
 const URLRule: Required<FormItemProps>['rules'][number] = {}
 // message: 'not valid URL', type: 'url'
 interface DbFormProps {
-	user: GetAuthData
+	user: any
 }
 
 const getStatus = (isStatus: boolean): { icon: ReactNode; status: InputProps['status'] } =>
@@ -47,8 +45,7 @@ export const DbForm: FC<DbFormProps> = ({ user }) => {
 	const wakaApiKey = user?.waka?.wakaApiKey
 	const isSchedule = user?.isSchedule
 	const [scheduleDisable, setScheduleDisable] = useState<boolean>(!isSchedule)
-
-	const { calendarId, languageId, projectsId } = user?.notion || {}
+	// const { calendarId, languageId, projectsId } = user?.notion || {}
 
 	const onChangeSchedule: SwitchProps['onChange'] = (checked) => {
 		setScheduleDisable(!checked)
@@ -56,7 +53,6 @@ export const DbForm: FC<DbFormProps> = ({ user }) => {
 
 	const onSubmit: FormProps['onFinish'] = (data) => {
 		const newData = { ...data, time: data?.time?.toISOString?.() }
-		console.log(newData)
 
 		http.post('/user', newData).then()
 	}
@@ -90,32 +86,32 @@ export const DbForm: FC<DbFormProps> = ({ user }) => {
 			<a href={'https://wakatime.com/settings/api-key'} rel={'noreferrer'} target={'_blank'}>
 				View api key
 			</a>
-			<FormItem
-				initialValue={calendarId}
-				label={'Day project url db'}
-				name={strCalendarId}
-				rules={[URLRule]}
-			>
-				<Input
-					name={strCalendarId}
-					onBlur={onBlur}
-					prefix={dayProject.icon}
-					status={dayProject.status}
-				/>
-			</FormItem>
-			<FormItem
-				initialValue={projectsId}
-				label={'All project url db'}
-				name={strProjectsId}
-				rules={[URLRule]}
-			>
-				<Input
-					name={strProjectsId}
-					onBlur={onBlur}
-					prefix={allProject.icon}
-					status={allProject.status}
-				/>
-			</FormItem>
+			{/*<FormItem*/}
+			{/*	initialValue={calendarId}*/}
+			{/*	label={'Day project url db'}*/}
+			{/*	name={strCalendarId}*/}
+			{/*	rules={[URLRule]}*/}
+			{/*>*/}
+			{/*	<Input*/}
+			{/*		name={strCalendarId}*/}
+			{/*		onBlur={onBlur}*/}
+			{/*		prefix={dayProject.icon}*/}
+			{/*		status={dayProject.status}*/}
+			{/*	/>*/}
+			{/*</FormItem>*/}
+			{/*<FormItem*/}
+			{/*	initialValue={projectsId}*/}
+			{/*	label={'All project url db'}*/}
+			{/*	name={strProjectsId}*/}
+			{/*	rules={[URLRule]}*/}
+			{/*>*/}
+			{/*	<Input*/}
+			{/*		name={strProjectsId}*/}
+			{/*		onBlur={onBlur}*/}
+			{/*		prefix={allProject.icon}*/}
+			{/*		status={allProject.status}*/}
+			{/*	/>*/}
+			{/*</FormItem>*/}
 			<FormItem label={'Language url db'} name={strLanguageId} rules={[URLRule]}>
 				<Input
 					name={strLanguageId}
