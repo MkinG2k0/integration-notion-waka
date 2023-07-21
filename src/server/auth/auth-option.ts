@@ -1,4 +1,6 @@
 // import { UpstashRedisAdapter } from '@auth/upstash-redis-adapter'
+import { BASE_API } from 'shared/config/env'
+
 import { UpstashRedisAdapter } from '@auth/upstash-redis-adapter'
 import { IAccount, UserInit } from 'server/lib/user-init'
 import { PrismaAdapter } from '@auth/prisma-adapter'
@@ -39,7 +41,7 @@ export const authOptions: AuthOptions = {
 		Notion({
 			clientId: process.env.NEXT_OAUTH_CLIENT_ID,
 			clientSecret: process.env.NEXT_OAUTH_CLIENT_SECRET,
-			redirectUri: 'http://localhost:3000/api/auth/callback/notion',
+			redirectUri: BASE_API.concat('auth/callback/notion'),
 		}),
 	],
 	session: { strategy: 'jwt' },
