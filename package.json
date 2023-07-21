@@ -8,7 +8,7 @@
 	"scripts": {
 		"dev": "next dev ",
 		"build": "prisma generate && next build",
-		"init": "npm run prisma:gen && next build",
+		"init": "prisma generate && next build",
 		"types": "tsc --noEmit",
 		"prisma:gen": "prisma db pull && prisma generate",
 		"start": "next start",
