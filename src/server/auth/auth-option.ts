@@ -3,6 +3,7 @@ import { BASE_API } from 'shared/config/env'
 
 import { UpstashRedisAdapter } from '@auth/upstash-redis-adapter'
 import { IAccount, UserInit } from 'server/lib/user-init'
+import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import Notion from '@auth/core/providers/notion'
 import { redis } from 'server/auth/redis'
@@ -47,6 +48,10 @@ export const authOptions: AuthOptions = {
 			clientId: process.env.NEXT_OAUTH_CLIENT_ID,
 			clientSecret: process.env.NEXT_OAUTH_CLIENT_SECRET,
 			redirectUri: BASE_API.concat('auth/callback/notion'),
+		}),
+		GoogleProvider({
+			clientId: process.env.NEXT_GOOGLE_ID || '',
+			clientSecret: process.env.NEXT_GOOGLE_SECRET || '',
 		}),
 	],
 	session: { strategy: 'jwt' },
