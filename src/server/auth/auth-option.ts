@@ -21,18 +21,23 @@ export const authOptions: AuthOptions = {
 				const { email, name, picture } = token
 				return { accessToken: access_token, email, name, picture, userId: providerAccountId }
 			}
+			console.log('jwt')
+
 			return token
 		},
 		async session({ session, token, user }) {
 			const newSession = session as any
 			newSession.accessToken = token?.accessToken
 			newSession.userId = token?.userId
+			console.log('session')
+			console.timeEnd('signIn')
 
 			return session
 		},
 		async signIn({ account, credentials, email, profile, user }) {
 			// UserInit(account as unknown as IAccount)
-
+			console.log('signIn')
+			console.time('signIn')
 			return true
 		},
 	},

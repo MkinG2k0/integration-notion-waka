@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 
+import { NotionAuthBtn } from 'shared'
+
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { trpc } from 'server/lib'
 import { Button } from 'antd'
@@ -30,7 +32,8 @@ export default function Home() {
 	return (
 		<>
 			Not signed in <br />
-			<button onClick={() => signIn()}>Sign in</button>
+			<Button onClick={() => signIn()}>Sign out</Button>
+			<NotionAuthBtn />
 		</>
 	)
 }

@@ -1,29 +1,15 @@
+import { BASE_API, REDIRECT_URI } from 'shared/config/env'
+
 import { Client } from '@notionhq/client'
 import { it } from 'vitest'
 
-const clientId = '96ae1b01-9f4a-4d55-98c5-642eda938a9a'
-const clientSecret = 'secret_n3T7baqeXsph4qQcZkX1WT3Cj19iUKsYtACZfoXJnP'
-const redirect =
-	'https://api.notion.com/v1/oauth/authorize?client_id=96ae1b01-9f4a-4d55-98c5-642eda938a9a&response_type=code&owner=user&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth'
+const clientId = '3cb4746d-cc64-4c98-a6ee-02e6c3122c18'
+const clientSecret = 'secret_j5PmPJ4eOjUJjOXvXMzmf8G7pM3urAQxmQtT4H5u5gH'
+//  process.env.NEXT_OAUTH_CLIENT_SECRET
+const redirectUri =
+	'https://api.notion.com/v1/oauth/authorize?client_id=3cb4746d-cc64-4c98-a6ee-02e6c3122c18&response_type=code&owner=user&redirect_uri=http://localhost:3000/'
 
-it('auth', async () => {
-	// encode in base 64
-	const encoded = Buffer.from(`${clientId}:${clientSecret}`).toString('base64')
-
-	const response = await fetch('https://api.notion.com/v1/oauth/token', {
-		body: JSON.stringify({
-			code: clientId,
-			grant_type: 'authorization_code',
-			redirect_uri: redirect,
-		}),
-		headers: {
-			Accept: 'application/json',
-			Authorization: `Basic ${encoded}`,
-			'Content-Type': 'application/json',
-		},
-		method: 'POST',
-	}).then((data) => data.json())
-})
+it('auth', async () => {})
 
 it('auth client', async () => {
 	const notionClient = new Client({
