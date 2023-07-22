@@ -20,7 +20,7 @@ interface Heart {
 const gap10min = 60 * 10
 
 export const parseWakaJson = async (pathFile, pathResult: string, gap: number = gap10min) => {
-	const data: IDate[] = JSON.parse(await fs.readFile(pathFile, { encoding: 'utf8' }))
+	const data = JSON.parse(await fs.readFile(pathFile, { encoding: 'utf8' })) as IDate[]
 
 	const time: { data: { project; time }[]; date }[] = []
 
@@ -93,7 +93,7 @@ export const parseWakaJson = async (pathFile, pathResult: string, gap: number = 
 }
 
 export const simplifyWakaJson = async (pathFile: string, pathResultFile: string) => {
-	const data = JSON.parse(await fs.readFile(pathFile, { encoding: 'utf8' }))
+	const data = JSON.parse(await fs.readFile(pathFile, { encoding: 'utf8' })) as any
 
 	const dataDays = data.days.map((day) => {
 		const { date, heartbeats } = day

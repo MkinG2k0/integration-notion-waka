@@ -1,19 +1,15 @@
-// import { UpstashRedisAdapter } from '@auth/upstash-redis-adapter'
 import { BASE_API } from 'shared/config/env'
 
 import { UpstashRedisAdapter } from '@auth/upstash-redis-adapter'
 import { IAccount, UserInit } from 'server/lib/user-init'
 import GoogleProvider from 'next-auth/providers/google'
-import { PrismaAdapter } from '@auth/prisma-adapter'
 import Notion from '@auth/core/providers/notion'
 import { redis } from 'server/auth/redis'
 import { AuthOptions } from 'next-auth'
-import { prisma } from 'server/prisma'
 
 export const authOptions: AuthOptions = {
 	// @ts-ignore
 	adapter: UpstashRedisAdapter(redis),
-	// adapter: PrismaAdapter(prisma),
 	callbacks: {
 		async jwt({ account, profile, session, token, user }) {
 			if (account && token) {
@@ -32,7 +28,7 @@ export const authOptions: AuthOptions = {
 			return session
 		},
 		async signIn({ account, credentials, email, profile, user }) {
-			// UserInit(account as unknown as IAccount)
+			UserInit(account as unknown as IAccount)
 
 			return true
 		},

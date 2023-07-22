@@ -20,11 +20,11 @@ export const wakaRouter = router({
 					return ReturnRequest(null, `invalid api "${apiKey}" key`, 'invalid_key')
 				}
 
-				// const wakaUpdate = await prisma.user.update({
-				// 	data: { wakaTime: { update: { wakaApiKey: apiKey } } },
-				// 	where: { providerAccountId: userId },
-				// })
-				// return ReturnRequest(wakaUpdate, 'updated')
+				const wakaUpdate = await prisma.user.update({
+					data: { wakaTime: { update: { wakaApiKey: apiKey } } },
+					where: { providerAccountId: userId },
+				})
+				return ReturnRequest(wakaUpdate, 'updated')
 			}
 
 			const wakaCreate = await prisma.wakaTime.create({ data: { userId, wakaApiKey: apiKey } })
@@ -39,10 +39,10 @@ export const wakaRouter = router({
 	}),
 	statusBar: privateProcedure.query(async ({ ctx }) => {
 		const { wakaClient } = ctx
-		//
-		// const { data } = await wakaClient.getStatusBar()
-		//
-		// data.dependencies = []
-		// return ReturnRequest(data, 'stats now')
+
+		const { data } = await wakaClient.getStatusBar()
+
+		data.dependencies = []
+		return ReturnRequest(data, 'stats now')
 	}),
 })

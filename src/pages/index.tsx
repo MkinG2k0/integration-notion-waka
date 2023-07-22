@@ -16,7 +16,6 @@ export default function Home() {
 
 	useEffect(() => {
 		// fetch('http://localhost:3000/api/test')
-		// mutate({ apiKey: 'waka_7c6dd81f-20bf-4efd-b47a-7bec725b535f' })
 	}, [])
 
 	if (session) {
