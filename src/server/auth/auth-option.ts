@@ -13,7 +13,7 @@ import { prisma } from 'server/prisma'
 
 export const authOptions: AuthOptions = {
 	// @ts-ignore
-	adapter: UpstashRedisAdapter(redis),
+	// adapter: UpstashRedisAdapter(redis),
 	// adapter: PrismaAdapter(prisma),
 	callbacks: {
 		async jwt({ account, profile, session, token, user }) {
