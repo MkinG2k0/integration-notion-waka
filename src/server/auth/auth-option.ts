@@ -7,13 +7,12 @@ import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import Notion from '@auth/core/providers/notion'
 import { redis } from 'server/auth/redis'
-// import { redis } from 'server/auth/redis'
 import { AuthOptions } from 'next-auth'
 import { prisma } from 'server/prisma'
 
 export const authOptions: AuthOptions = {
 	// @ts-ignore
-	// adapter: UpstashRedisAdapter(redis),
+	adapter: UpstashRedisAdapter(redis),
 	// adapter: PrismaAdapter(prisma),
 	callbacks: {
 		async jwt({ account, profile, session, token, user }) {
@@ -22,7 +21,6 @@ export const authOptions: AuthOptions = {
 				const { email, name, picture } = token
 				return { accessToken: access_token, email, name, picture, userId: providerAccountId }
 			}
-			console.log('jwt')
 
 			return token
 		},
@@ -30,15 +28,12 @@ export const authOptions: AuthOptions = {
 			const newSession = session as any
 			newSession.accessToken = token?.accessToken
 			newSession.userId = token?.userId
-			console.log('session')
-			console.timeEnd('signIn')
 
 			return session
 		},
 		async signIn({ account, credentials, email, profile, user }) {
 			// UserInit(account as unknown as IAccount)
-			console.log('signIn')
-			console.time('signIn')
+
 			return true
 		},
 	},

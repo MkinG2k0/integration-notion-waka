@@ -10,11 +10,11 @@ export interface IAccount {
 export const UserInit = async (account: IAccount) => {
 	const { access_token, providerAccountId, workspace_id, workspace_name } = account
 
-	const user = await prisma.user.findUnique({ where: { providerAccountId } })
-
-	if (user) {
-		return
-	}
+	// const user = await prisma.user.findUnique({ where: { providerAccountId } })
+	return
+	// if (user) {
+	// 	return
+	// }
 
 	const notionClient = new Client({
 		auth: access_token,
@@ -31,25 +31,25 @@ export const UserInit = async (account: IAccount) => {
 			return { id, title: normTitle }
 		})
 
-	const newUser = await prisma.user.create({
-		data: {
-			name: workspace_name,
-			notion: {
-				create: {
-					accessToken: access_token,
-					blocks: {},
-					databases: { create: dataBase },
-					id: providerAccountId,
-					pages: {},
-					workspaceId: workspace_id,
-				},
-			},
-			providerAccountId,
-			wakaTime: {
-				create: { wakaApiKey: '' },
-			},
-		},
-	})
+	// const newUser = await prisma.user.create({
+	// 	data: {
+	// 		name: workspace_name,
+	// 		notion: {
+	// 			create: {
+	// 				accessToken: access_token,
+	// 				blocks: {},
+	// 				databases: { create: dataBase },
+	// 				id: providerAccountId,
+	// 				pages: {},
+	// 				workspaceId: workspace_id,
+	// 			},
+	// 		},
+	// 		providerAccountId,
+	// 		wakaTime: {
+	// 			create: { wakaApiKey: '' },
+	// 		},
+	// 	},
+	// })
 }
 
 // await prisma.user.upsert({
