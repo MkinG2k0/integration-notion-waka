@@ -31,7 +31,7 @@ export const authOptions: AuthOptions = {
 			return session
 		},
 		async signIn({ account, credentials, email, profile, user }) {
-			UserInit(account as unknown as IAccount)
+			// UserInit(account as unknown as IAccount)
 
 			return true
 		},
