@@ -22,7 +22,9 @@
       "entities/*": [
         "entities/*"
       ],
-
+      "prisma-types": [
+        "../prisma/client"
+      ]
     },
     "lib": [
       "dom",
@@ -43,7 +45,9 @@
     "prisma/client/**/*.ts"
   ],
   "exclude": [
-    "node_modules",".next",".husky",
+    "node_modules",
+    ".next",
+    ".husky",
     "prisma/**"
   ]
 }

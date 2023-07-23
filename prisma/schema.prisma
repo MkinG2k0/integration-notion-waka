@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "./client"
 }
 
 datasource db {
@@ -20,9 +21,7 @@ model User {
 model Notion {
   id String @id @unique
 
-  databases   NotionDatabase[]
-  pages       NotionPage[]
-  blocks      NotionBlock[]
+  data        NotionUnit[]
   accessToken String
 
   workspaceId String @unique
@@ -40,25 +39,12 @@ model WakaTime {
   userId     String @unique
 }
 
-model NotionDatabase {
-  id       String  @id @unique
+model NotionUnit {
+  id       String  @id @default(cuid())
+  dataId   String  @unique
+  type     String
   isEnable Boolean @default(true)
   title    String
-  Notion   Notion? @relation(fields: [notionId], references: [id])
-  notionId String?
-}
-
-model NotionBlock {
-  id       String  @id @unique
-  isEnable Boolean @default(true)
-  title    String
-  Notion   Notion? @relation(fields: [notionId], references: [id])
-  notionId String?
-}
-
-model NotionPage {
-  id       String  @id @unique
-  isEnable Boolean @default(true)
   Notion   Notion? @relation(fields: [notionId], references: [id])
   notionId String?
 }

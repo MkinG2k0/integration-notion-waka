@@ -1,4 +1,5 @@
-import { schedule } from 'server/routers/schedule/utils'
+import { schedule } from 'features/core/schedule/schedule'
+
 import { verifySignature } from '@upstash/qstash/nextjs'
 
 const handler = async (req, res) => {

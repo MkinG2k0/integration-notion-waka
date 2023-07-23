@@ -1,6 +1,7 @@
 import { BASE_API } from 'shared/config/env'
 
-import { httpBatchLink, loggerLink } from '@trpc/client'
+import { httpBatchLink, httpLink, loggerLink } from '@trpc/client'
+import { devtoolsLink } from 'trpc-client-devtools-link'
 import { AppRouter } from 'server/routers/_app'
 import { createTRPCNext } from '@trpc/next'
 import superjson from 'superjson'

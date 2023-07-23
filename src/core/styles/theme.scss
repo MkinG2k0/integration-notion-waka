@@ -59,7 +59,7 @@
 		--input: var(--accent);
 
 		--primary: var(--text);
-		--primary-foreground: var(--text);
+		--primary-foreground: var(--background);
 
 		--secondary: var(--accent);
 		--secondary-foreground: var(--text);
@@ -79,8 +79,8 @@
 		--background: #0c1f22;
 		--foreground: var(--text);
 
-		--muted: var(--background);
-		--muted-foreground: var(--text);
+		--muted: var(--secondary);
+		--muted-foreground: #929292;
 
 		--popover: var(--background);
 		--popover-foreground: var(--text);

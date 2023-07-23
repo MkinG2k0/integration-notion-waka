@@ -36,9 +36,11 @@ export const userInit = async (account: IAccount) => {
 			const { id, title } = data
 
 			const normTitle = title[0].plain_text
-			return { id, title: normTitle }
+			return { dataId: id, title: normTitle, type: 'database' }
 		})
 		.filter(Boolean)
+
+	console.log(dataBase)
 
 	const newUser = await prisma.user.create({
 		data: {
@@ -46,10 +48,8 @@ export const userInit = async (account: IAccount) => {
 			notion: {
 				create: {
 					accessToken: access_token,
-					blocks: {},
-					databases: { create: dataBase },
+					data: { create: dataBase },
 					id: providerAccountId,
-					pages: {},
 					workspaceId: workspace_id,
 				},
 			},

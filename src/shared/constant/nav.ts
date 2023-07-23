@@ -1,5 +1,5 @@
 export const NAV = {
 	DASHBOARD: '/dashboard',
 	MAIN: '/',
-	SETTINGS: '/dashboard/settings',
+	SETTINGS: '/settings',
 } as const
