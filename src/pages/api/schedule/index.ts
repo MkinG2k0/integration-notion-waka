@@ -7,7 +7,6 @@ const handler = async (req, res) => {
 }
 
 export default verifySignature(handler)
-// export default handler
 
 export const config = {
 	api: {

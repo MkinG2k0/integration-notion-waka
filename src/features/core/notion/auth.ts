@@ -1,6 +1,6 @@
 import { http } from 'shared'
 
-export const NotionAuth = async ({ clientId, clientSecret, code, redirect_uri }: INotionAuth) => {
+export const notionAuth = async ({ clientId, clientSecret, code, redirect_uri }: INotionAuth) => {
 	const encoded = Buffer.from(`${clientId}:${clientSecret}`).toString('base64')
 
 	return await http

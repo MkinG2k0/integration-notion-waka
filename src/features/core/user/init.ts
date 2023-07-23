@@ -7,7 +7,8 @@ export interface IAccount {
 	workspace_id: string
 	workspace_name: string
 }
-export const UserInit = async (account: IAccount) => {
+
+export const userInit = async (account: IAccount) => {
 	const { access_token, providerAccountId, workspace_id, workspace_name } = account
 
 	const user = await prisma.user.findUnique({

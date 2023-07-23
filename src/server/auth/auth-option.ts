@@ -1,8 +1,8 @@
+import { IAccount, userInit } from 'features/core'
+
 import { BASE_API } from 'shared/config/env'
 
 import { UpstashRedisAdapter } from '@auth/upstash-redis-adapter'
-import { IAccount, UserInit } from 'server/lib/user-init'
-import GoogleProvider from 'next-auth/providers/google'
 import Notion from '@auth/core/providers/notion'
 import { redis } from 'server/auth/redis'
 import { AuthOptions } from 'next-auth'
@@ -28,7 +28,7 @@ export const authOptions: AuthOptions = {
 			return session
 		},
 		async signIn({ account, credentials, email, profile, user }) {
-			UserInit(account as unknown as IAccount)
+			userInit(account as unknown as IAccount)
 
 			return true
 		},
@@ -39,10 +39,6 @@ export const authOptions: AuthOptions = {
 			clientId: process.env.NEXT_OAUTH_CLIENT_ID,
 			clientSecret: process.env.NEXT_OAUTH_CLIENT_SECRET,
 			redirectUri: BASE_API.concat('auth/callback/notion'),
-		}),
-		GoogleProvider({
-			clientId: process.env.NEXT_GOOGLE_ID || '',
-			clientSecret: process.env.NEXT_GOOGLE_SECRET || '',
 		}),
 	],
 	session: { strategy: 'jwt' },

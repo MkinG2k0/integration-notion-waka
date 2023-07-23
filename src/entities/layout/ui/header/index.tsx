@@ -1,68 +1,114 @@
-// import { MenuItems } from 'entities/layout/config/menu'
+import { ModeToggle } from 'entities/layout/ui/toggle-theme'
 
-import { SiderBtn } from '../sider-btn'
+import {
+	NavigationMenu,
+	NavigationMenuContent,
+	NavigationMenuItem,
+	NavigationMenuLink,
+	NavigationMenuList,
+	NavigationMenuTrigger,
+	navigationMenuTriggerStyle,
+} from 'shared/ui/navigation-menu'
+import { Popover, PopoverContent, PopoverTrigger } from 'shared/ui/popover'
+import { Command, CommandGroup, CommandItem } from 'shared/ui/command'
+import { Avatar, AvatarFallback, AvatarImage } from 'shared/ui/avatar'
+import { NavBtn } from 'shared/ui/nav-btn'
+import { Button } from 'shared/ui/button'
+import { NAV } from 'shared/constant/nav'
+
+import { signIn, signOut, useSession } from 'next-auth/react'
+import { useTheme } from 'next-themes'
+import Link from 'next/link'
 
 interface HeaderProps {}
 
 export const Header: FC<HeaderProps> = ({}) => {
-	// const path = usePathname()
-	// const router = useRouter()
-
-	// const onClickMenu: MenuProps['onClick'] = ({ key }) => {
-	// 	router.push(key)
-	// }
-
 	return (
-		<div className={'flex bg-gray-700 h-12'}>
-			<SiderBtn />
-			{/* <Menu*/}
-			{/*	className={'bg-gray-700 w-full flex'}*/}
-			{/*	theme={'dark'}*/}
-			{/*	selectedKeys={[path!]}*/}
-			{/*	mode={'horizontal'}*/}
-			{/*	items={MenuItems}*/}
-			{/*	onClick={onClickMenu}*/}
-			{/* />*/}
+		<div
+			className={'row justify-between h-14 items-center border-b  px-4 py-2 text-accent-foreground'}
+		>
+			<Menu />
+			<div className={'row gap-4 items-center'}>
+				<ModeToggle />
+				<UserAvatar />
+			</div>
 		</div>
 	)
 }
 
-export const HeaderLoad = () => {
+const UserAvatar = () => {
+	const { data: session, status } = useSession()
+
+	const image = session?.user?.image || ''
+	const name = (session?.user?.name || '').slice(0, 2)
+
+	const onSignOut = () => {
+		signOut()
+	}
+
+	const onSignIn = () => {
+		signIn()
+	}
+
+	if (status === 'loading') {
+		return null
+	}
+	if (status === 'unauthenticated') {
+		return <Button onClick={onSignIn}>Sign in</Button>
+	}
+
 	return (
-		<div className={'flex bg-gray-700 h-12 '}>
-			<div
-				className={'bg-gray-800 flex items-center justify-center w-20 flex-grow-0 flex-shrink-0'}
-			></div>
-			{/* <Skeleton />*/}
-		</div>
+		<Popover>
+			<PopoverTrigger>
+				<Avatar>
+					<AvatarImage src={image} />
+					<AvatarFallback>{name}</AvatarFallback>
+				</Avatar>
+			</PopoverTrigger>
+			<PopoverContent>
+				<Command>
+					<CommandGroup heading={'Settings'}>
+						<CommandItem>Profile</CommandItem>
+						<CommandItem>Settings</CommandItem>
+					</CommandGroup>
+					<CommandItem onSelect={onSignOut}>Out</CommandItem>
+				</Command>
+			</PopoverContent>
+		</Popover>
 	)
 }
 
-// export const Header2: FC = () => {
-// 	const path = usePathname()
-// 	console.log(path)
-//
-// 	return (
-// 		<div className={'flex bg-gray-700 h-16'}>
-// 			<div
-// 				className={
-// 					'flex justify-center items-center h-full p-2 gap-2 cursor-pointer hover:text-brand-500 transition min-w-[5rem] bg-gray-800'
-// 				}
-// 			>
-// 				<MenuUnfoldOutlined />
-// 			</div>
-//
-// 			{MenuItems.map((item) => (
-// 				<div
-// 					key={item.key}
-// 					className={`flex justify-center items-center h-full px-4 gap-1.5 cursor-pointer hover:text-white transition text-gray-300 ${
-// 						item.key === path ? 'bg-brand-500' : 'a'
-// 					}`}
-// 				>
-// 					<div>{item.icon}</div>
-// 					<div>{item.label}</div>
-// 				</div>
-// 			))}
-// 		</div>
-// 	)
-// }
+const Menu = () => {
+	const { status } = useSession()
+	const authenticated = status === 'authenticated'
+
+	return (
+		<NavigationMenu>
+			<NavigationMenuList>
+				<NavigationMenuItem>
+					<Link href={NAV.MAIN} legacyBehavior passHref>
+						<NavigationMenuLink className={navigationMenuTriggerStyle()}>Main</NavigationMenuLink>
+					</Link>
+				</NavigationMenuItem>
+				{authenticated && (
+					<>
+						<NavigationMenuItem>
+							<Link href={NAV.DASHBOARD} legacyBehavior passHref>
+								<NavigationMenuLink className={navigationMenuTriggerStyle()}>
+									Dashboard
+								</NavigationMenuLink>
+							</Link>
+						</NavigationMenuItem>
+						<NavigationMenuItem>
+							<Link href={NAV.SETTINGS} legacyBehavior passHref>
+								<NavigationMenuLink className={navigationMenuTriggerStyle()}>
+									Settings
+								</NavigationMenuLink>
+							</Link>
+						</NavigationMenuItem>
+					</>
+				)}
+			</NavigationMenuList>
+		</NavigationMenu>
+	)
+}

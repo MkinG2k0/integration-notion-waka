@@ -1,5 +1,5 @@
-'use client'
-import { Button, ButtonProps } from 'antd'
+import { Button, ButtonProps } from 'shared/ui/button'
+
 import Link from 'next/link'
 
 interface NavBtnProps extends ButtonProps {
