@@ -40,7 +40,7 @@ export const userInit = async (account: IAccount) => {
 		.filter(Boolean)
 
 	// TODO не создается units , возможно он пустой , типо не успел создаться таблица
-
+	//
 	const newUser = await prisma.user.create({
 		data: {
 			name: workspace_name,
