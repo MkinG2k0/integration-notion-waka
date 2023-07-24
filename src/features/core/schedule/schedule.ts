@@ -27,7 +27,7 @@ export const schedule = async () => {
 		where: {},
 	})
 
-	const scheduleArr = users.map(async ({ notion, wakaTime }) => {
+	users.map(async ({ notion, wakaTime }) => {
 		if (!notion || !wakaTime) {
 			return
 		}
@@ -37,31 +37,26 @@ export const schedule = async () => {
 
 		const wakaClient = new WakaTimeClient(wakaApiKey)
 
-		const statusBar = await wakaClient.getStatusBar()
+		const notionClient = new Client({ auth: accessToken })
 
-		const database = await data.map(async ({ id, notionId, title }) => {
-			const createProjects = await statusBar.data.projects.map(
-				async ({ hours, minutes, name, text, total_seconds }) => {
-					const project: IProject = {
-						hours,
-						minutes,
-						relation: name,
-						startDate: new Date().toISOString(),
-						title: name,
-					}
+		const statusBar = await wakaClient.getStatusBar().catch(() => false)
 
-					const notionClient = new Client({ auth: accessToken })
+		if (typeof statusBar === 'boolean') {
+			return
+		}
 
-					await createPageInDb(notionClient, id, project)
-				},
-			)
-			await Promise.all(createProjects)
+		data.map(async ({ dataId }) => {
+			statusBar.data.projects.map(async ({ hours, minutes, name, text, total_seconds }) => {
+				const project: IProject = {
+					hours,
+					minutes,
+					relation: name,
+					startDate: new Date().toISOString(),
+					title: name,
+				}
+
+				await createPageInDb(notionClient, dataId, project)
+			})
 		})
-
-		await Promise.all(database)
 	})
-
-	const data = await Promise.all(scheduleArr)
-
-	return data
 }

@@ -5,4 +5,5 @@ import { t } from 'server/trpc'
 export const router = t.router
 export const publicProcedure = t.procedure
 
-export const privateProcedure = t.procedure.use(isAuthed).use(wakaClient).use(notionClient)
+export const privateProcedure = publicProcedure.use(isAuthed).use(notionClient)
+export const privateWakaProcedure = privateProcedure.use(wakaClient)

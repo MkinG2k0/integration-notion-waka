@@ -19,6 +19,7 @@ export const createPageInDb = async (
 		database_id,
 		filter: { property: 'waka_id', rich_text: { equals: customId } },
 	})
+
 	const isFind = searchDay.results[0]
 
 	if (isFind) {
@@ -58,5 +59,6 @@ export const createPageInDb = async (
 			waka_id: { rich_text: [{ text: { content: customId } }] },
 		},
 	})
+
 	return data
 }

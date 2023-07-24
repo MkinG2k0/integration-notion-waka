@@ -1,13 +1,13 @@
 import { isValidApiKey } from 'shared/lib/waka/is-valid-api-key'
 import { ReturnRequest } from 'shared'
 
+import { privateProcedure, privateWakaProcedure, router } from 'server/router'
 import { wakaProjectRouter } from 'server/routers/waka/waka-projects'
-import { privateProcedure, router } from 'server/router'
 import { z } from 'zod'
 
 export const wakaRouter = router({
 	project: wakaProjectRouter,
-	setToken: privateProcedure
+	setToken: privateWakaProcedure
 		.input(z.object({ apiKey: z.string() }))
 		.mutation(async ({ ctx: { prisma, session, wakaClient }, input }) => {
 			const { userId } = session
@@ -31,13 +31,13 @@ export const wakaRouter = router({
 
 			return ReturnRequest(wakaCreate, 'created')
 		}),
-	stats: privateProcedure.input(z.string()).query(async ({ ctx: { wakaClient }, input }) => {
+	stats: privateWakaProcedure.input(z.string()).query(async ({ ctx: { wakaClient }, input }) => {
 		// @ts-ignore TODO input range
 		const { data } = await wakaClient.getStats({ range: input })
 		data.dependencies = []
 		return ReturnRequest(data, 'last 7 days stats')
 	}),
-	statusBar: privateProcedure.query(async ({ ctx }) => {
+	statusBar: privateWakaProcedure.query(async ({ ctx }) => {
 		const { wakaClient } = ctx
 
 		const { data } = await wakaClient.getStatusBar()

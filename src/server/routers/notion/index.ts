@@ -2,32 +2,46 @@ import { ReturnRequest } from 'shared'
 
 import { wakaProjectRouter } from 'server/routers/waka/waka-projects'
 import { privateProcedure, router } from 'server/router'
-import { NotionUnit } from 'prisma-types'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
-export type TDatabaseTitle = 'Days' | 'Projects' | 'Tasks'
+export type TDatabaseTitle = 'Days' | 'Projects' | 'Tasks' | 'WakaTimeApiKey'
+export type TDatabase = Record<TDatabaseTitle, { dataId: string; id: string; title: string }>
 
 export const notionRouter = router({
 	getDatabaseId: privateProcedure.query(async ({ ctx: { prisma, session }, input }) => {
 		const { userId } = session
 
 		const user = await prisma.user.findUnique({
-			select: { notion: { select: { data: { where: { type: 'database' } } } } },
+			select: {
+				notion: { select: { data: { where: { type: 'database' } } } },
+				wakaTime: { select: { id: true, wakaApiKey: true } },
+			},
 			where: { providerAccountId: userId },
 		})
 
-		const dataBases = user?.notion?.data
+		if (!user) {
+			throw new TRPCError({ code: 'NOT_FOUND', message: 'Not found user' })
+		}
+		const { notion, wakaTime } = user
 
-		if (!dataBases) {
-			throw new TRPCError({ code: 'NOT_FOUND', message: 'Not found database' })
+		if (!notion) {
+			throw new TRPCError({ code: 'NOT_FOUND', message: 'Not found notion' })
 		}
 
-		const result = {} as Record<TDatabaseTitle, NotionUnit>
+		if (!wakaTime) {
+			throw new TRPCError({ code: 'NOT_FOUND', message: 'Not found wakaTime' })
+		}
+
+		const dataBases = notion.data
+
+		const WakaTimeApiKey = { dataId: wakaTime.wakaApiKey, id: wakaTime.id, title: 'WakaTimeApiKey' }
+
+		const result = { WakaTimeApiKey } as TDatabase
 
 		dataBases.forEach((data) => {
-			const { title } = data
-			result[title] = data
+			const { dataId, id, title } = data
+			result[title] = { dataId, id, title }
 		})
 
 		return ReturnRequest(result, 'get')
@@ -38,15 +52,26 @@ export const notionRouter = router({
 			z.object({
 				Days: z.object({ data: z.string(), id: z.string() }),
 				Projects: z.object({ data: z.string(), id: z.string() }),
+				WakaTimeApiKey: z.object({ data: z.string(), id: z.string() }),
 			}),
 		)
 		.mutation(async ({ ctx: { prisma, session }, input }) => {
-			const { Days, Projects } = input
-			await prisma.notionUnit.update({ data: { dataId: Days.data }, where: { id: Days.id } })
-			await prisma.notionUnit.update({
+			const { Days, Projects, WakaTimeApiKey } = input
+			const daysUnit = prisma.notionUnit.update({
+				data: { dataId: Days.data },
+				where: { id: Days.id },
+			})
+			const ProjectsUnit = prisma.notionUnit.update({
 				data: { dataId: Projects.data },
 				where: { id: Projects.id },
 			})
+
+			const wakaTime = prisma.wakaTime.update({
+				data: { wakaApiKey: WakaTimeApiKey.data },
+				where: { id: WakaTimeApiKey.id },
+			})
+
+			await Promise.all([daysUnit, ProjectsUnit, wakaTime])
 
 			return ReturnRequest(null, 'updated')
 		}),

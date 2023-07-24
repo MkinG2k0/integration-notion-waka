@@ -21,6 +21,7 @@ export const SettingsForm: FC<SettingsFormProps> = () => {
 		defaultValues: {
 			Days: databases.Days.dataId,
 			Projects: databases.Projects.dataId,
+			WakaTimeApiKey: databases.WakaTimeApiKey.dataId,
 		},
 		resolver: zodResolver(formSchema),
 	})
@@ -29,6 +30,7 @@ export const SettingsForm: FC<SettingsFormProps> = () => {
 		const newData = {
 			Days: { data: data.Days, id: databases.Days.id },
 			Projects: { data: data.Projects, id: databases.Projects.id },
+			WakaTimeApiKey: { data: data.WakaTimeApiKey, id: databases.WakaTimeApiKey.id },
 		}
 		mutate(newData)
 		toast({
@@ -45,13 +47,13 @@ export const SettingsForm: FC<SettingsFormProps> = () => {
 						<FormItem>
 							<FormLabel>WakaTime Api key</FormLabel>
 							<FormControl>
-								<Input placeholder={'id'} {...field} />
+								<Input placeholder={'api key'} {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
 					)}
 					control={form.control}
-					name={'Days'}
+					name={'WakaTimeApiKey'}
 				/>
 				<FormField
 					render={({ field }) => (
