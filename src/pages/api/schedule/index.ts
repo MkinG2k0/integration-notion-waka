@@ -7,8 +7,7 @@ const handler = async (req, res) => {
 	res.status(200).end()
 }
 
-// export default verifySignature(handler)
-export default handler
+export default verifySignature(handler)
 
 export const config = {
 	api: {
