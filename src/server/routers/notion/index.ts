@@ -14,7 +14,7 @@ export const notionRouter = router({
 
 		const user = await prisma.user.findUnique({
 			select: {
-				notion: { select: { data: { where: { type: 'database' } } } },
+				notion: { select: { units: { where: { type: 'database' } } } },
 				wakaTime: { select: { id: true, wakaApiKey: true } },
 			},
 			where: { providerAccountId: userId },
@@ -33,7 +33,7 @@ export const notionRouter = router({
 			throw new TRPCError({ code: 'NOT_FOUND', message: 'Not found wakaTime' })
 		}
 
-		const dataBases = notion.data
+		const dataBases = notion.units
 
 		const WakaTimeApiKey = { dataId: wakaTime.wakaApiKey, id: wakaTime.id, title: 'WakaTimeApiKey' }
 

@@ -26,7 +26,7 @@ export const userInit = async (account: IAccount) => {
 
 	const data = await notionClient.search({ auth: access_token })
 
-	const dataBase = data.results
+	const units = data.results
 		.filter(({ object }) => object === 'database')
 		.map((data) => {
 			if (!('title' in data)) {
@@ -40,16 +40,14 @@ export const userInit = async (account: IAccount) => {
 		})
 		.filter(Boolean)
 
-	console.log(dataBase)
-
 	const newUser = await prisma.user.create({
 		data: {
 			name: workspace_name,
 			notion: {
 				create: {
 					accessToken: access_token,
-					data: { create: dataBase },
 					id: providerAccountId,
+					units: { create: units },
 					workspaceId: workspace_id,
 				},
 			},

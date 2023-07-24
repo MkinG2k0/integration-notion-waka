@@ -18,7 +18,7 @@ export const schedule = async () => {
 	const users = await prisma.user.findMany({
 		select: {
 			notion: {
-				select: { accessToken: true, data: { where: { isEnable: true, title: 'Days' } } },
+				select: { accessToken: true, units: { where: { isEnable: true, title: 'Days' } } },
 			},
 			wakaTime: {
 				select: { wakaApiKey: true },
@@ -31,7 +31,7 @@ export const schedule = async () => {
 		if (!notion || !wakaTime) {
 			return
 		}
-		const { accessToken, data } = notion
+		const { accessToken, units } = notion
 
 		const { wakaApiKey } = wakaTime
 
@@ -45,7 +45,7 @@ export const schedule = async () => {
 			return
 		}
 
-		data.map(async ({ dataId }) => {
+		units.map(async ({ dataId }) => {
 			statusBar.data.projects.map(async ({ hours, minutes, name, text, total_seconds }) => {
 				const project: IProject = {
 					hours,

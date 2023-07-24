@@ -21,7 +21,7 @@ model User {
 model Notion {
   id String @id @unique
 
-  data        NotionUnit[]
+  units       NotionUnit[]
   accessToken String
 
   workspaceId String @unique
