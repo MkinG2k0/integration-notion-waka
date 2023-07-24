@@ -45,7 +45,17 @@ export const SettingsForm: FC<SettingsFormProps> = () => {
 				<FormField
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>WakaTime Api key</FormLabel>
+							<FormLabel>
+								{' WakaTime '}
+								<a
+									className={'text-blue-500'}
+									href={'https://wakatime.com/settings/account'}
+									rel={'noreferrer'}
+									target={'_blank'}
+								>
+									{' Api key '}
+								</a>
+							</FormLabel>
 							<FormControl>
 								<Input placeholder={'api key'} {...field} />
 							</FormControl>
