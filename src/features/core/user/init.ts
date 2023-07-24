@@ -19,7 +19,6 @@ export const userInit = async (account: IAccount) => {
 	if (user) {
 		return
 	}
-
 	const notionClient = new Client({
 		auth: access_token,
 	})
@@ -39,6 +38,8 @@ export const userInit = async (account: IAccount) => {
 			return { dataId: id, title: normTitle, type: 'database' }
 		})
 		.filter(Boolean)
+
+	// TODO не создается units , возможно он пустой , типо не успел создаться таблица
 
 	const newUser = await prisma.user.create({
 		data: {
