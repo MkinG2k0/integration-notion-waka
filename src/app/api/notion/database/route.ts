@@ -28,7 +28,7 @@ export const GET = async (request: Request) => {
 			{
 				message: 'is not auth',
 			},
-			{ status: 401 }
+			{ status: 401 },
 		)
 	}
 

@@ -1,5 +1,4 @@
-import { Skeleton } from 'shared/ui/skeleton'
-
+/* eslint react/no-unescaped-entities: 0 */
 export default function Home() {
 	return (
 		<div className={'col gap-4'}>
@@ -26,8 +25,8 @@ export default function Home() {
 				: he would tax the jokes in the kingdom.
 			</p>
 			<blockquote className={'mt-6 border-l-2 pl-6 italic'}>
-				"After all," he said, "everyone enjoys a good joke, so it's only fair that they should pay
-				for the privilege."
+				&quot;After all,&quot; he said, "everyone enjoys a good joke, so it's only fair that they
+				should pay for the privilege."
 			</blockquote>
 			<h3 className={'mt-8 scroll-m-20 text-2xl font-semibold tracking-tight'}>The Joke Tax</h3>
 			<p className={'leading-7 [&:not(:first-child)]:mt-6'}>
