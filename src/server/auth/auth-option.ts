@@ -24,7 +24,6 @@ export const authOptions: AuthOptions = {
 			const newSession = session as any
 			newSession.accessToken = token?.accessToken
 			newSession.userId = token?.userId
-
 			return session
 		},
 		async signIn({ account, credentials, email, profile, user }) {
