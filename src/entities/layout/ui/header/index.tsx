@@ -2,22 +2,19 @@ import { ModeToggle } from 'entities/layout/ui/toggle-theme'
 
 import {
 	NavigationMenu,
-	NavigationMenuContent,
 	NavigationMenuItem,
 	NavigationMenuLink,
 	NavigationMenuList,
-	NavigationMenuTrigger,
 	navigationMenuTriggerStyle,
 } from 'shared/ui/navigation-menu'
 import { Popover, PopoverContent, PopoverTrigger } from 'shared/ui/popover'
-import { Command, CommandGroup, CommandItem } from 'shared/ui/command'
 import { Avatar, AvatarFallback, AvatarImage } from 'shared/ui/avatar'
-import { NavBtn } from 'shared/ui/nav-btn'
-import { Button } from 'shared/ui/button'
+import { Command, CommandGroup, CommandItem } from 'shared/ui/command'
 import { NAV } from 'shared/constant/nav'
+import { Button } from 'shared/ui/button'
 
 import { signIn, signOut, useSession } from 'next-auth/react'
-import { useTheme } from 'next-themes'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
 interface HeaderProps {}
@@ -38,12 +35,14 @@ export const Header: FC<HeaderProps> = ({}) => {
 
 const UserAvatar = () => {
 	const { data: session, status } = useSession()
-
+	const navigate = useRouter()
 	const image = session?.user?.image || ''
 	const name = (session?.user?.name || '').slice(0, 2)
 
 	const onSignOut = () => {
-		signOut()
+		signOut().then(() => {
+			navigate.push('/')
+		})
 	}
 
 	const onSignIn = () => {

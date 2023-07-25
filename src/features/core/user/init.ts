@@ -19,11 +19,12 @@ export const userInit = async (account: IAccount) => {
 	if (user) {
 		return
 	}
+
 	const notionClient = new Client({
 		auth: access_token,
 	})
 
-	const data = await notionClient.search({ auth: access_token })
+	const data = await notionClient.search({})
 
 	const units = data.results
 		.filter(({ object }) => object === 'database')
@@ -39,7 +40,14 @@ export const userInit = async (account: IAccount) => {
 		})
 		.filter(Boolean)
 
-	// TODO не создается units , возможно он пустой , типо не успел создаться таблица
+	const countTables = 3
+	if (units.length < countTables) {
+		setTimeout(() => {
+			userInit(account)
+		}, 500)
+		return
+	}
+
 	const newUser = await prisma.user.create({
 		data: {
 			name: workspace_name,

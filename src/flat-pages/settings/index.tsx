@@ -4,9 +4,9 @@ import { SettingsForm } from 'flat-pages/settings/ui/form'
 import { trpc } from 'server/lib'
 
 export const Settings = () => {
-	const { isLoading } = trpc.notion.getDatabaseId.useQuery()
+	const { error, isLoading } = trpc.notion.getDatabaseId.useQuery()
 
-	if (isLoading) {
+	if (isLoading || error) {
 		return (
 			<div className={'col gap-6'}>
 				<div className={'col gap-3'}>

@@ -33,7 +33,7 @@ model Notion {
 model WakaTime {
   id String @id @default(cuid())
 
-  wakaApiKey String @unique
+  wakaApiKey String
   // relation
   User       User   @relation(fields: [userId], references: [id])
   userId     String @unique

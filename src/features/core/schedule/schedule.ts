@@ -15,6 +15,7 @@ export interface IProject {
 }
 
 export const schedule = async () => {
+	const start = Date.now()
 	const users = await prisma.user.findMany({
 		select: {
 			notion: {
@@ -59,4 +60,8 @@ export const schedule = async () => {
 			})
 		})
 	})
+
+	const end = Date.now()
+
+	return (end - start) / 1000
 }

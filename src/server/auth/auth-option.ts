@@ -1,6 +1,6 @@
 import { IAccount, userInit } from 'features/core'
 
-import { BASE_API } from 'shared/config/env'
+import { BASE_API, BASE_URL } from 'shared/config/env'
 
 import { UpstashRedisAdapter } from '@auth/upstash-redis-adapter'
 import Notion from '@auth/core/providers/notion'
@@ -19,6 +19,9 @@ export const authOptions: AuthOptions = {
 			}
 
 			return token
+		},
+		redirect: ({ baseUrl, url }) => {
+			return BASE_URL.concat('settings')
 		},
 		async session({ session, token, user }) {
 			const newSession = session as any
