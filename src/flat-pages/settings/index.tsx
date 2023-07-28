@@ -21,7 +21,10 @@ export const Settings = () => {
 					<Skeleton className={'w-[14rem] h-5'} />
 					<Skeleton className={'w-full h-10'} />
 				</div>
-				<Skeleton className={'w-[8rem] h-10'} />
+				<div className={'row justify-between'}>
+					<Skeleton className={'w-[8rem] h-10'} />
+					<Skeleton className={'w-[8rem] h-10'} />
+				</div>
 			</div>
 		)
 	}

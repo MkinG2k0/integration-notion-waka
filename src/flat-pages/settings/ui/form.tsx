@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { useEffect } from 'react'
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from 'shared/ui/form'
 import { toast } from 'shared/ui/use-toast'
@@ -15,7 +16,17 @@ interface SettingsFormProps {}
 export const SettingsForm: FC<SettingsFormProps> = () => {
 	const { data } = trpc.notion.getDatabaseId.useQuery()
 	const { mutate } = trpc.notion.setDatabaseId.useMutation()
+	const { data: testData, isError, isSuccess, mutate: runTest } = trpc.schedule.test.useMutation()
 	const databases = data?.data!
+
+	useEffect(() => {
+		if (isSuccess) {
+			toast({
+				className: 'border-green-500',
+				title: 'Tested',
+			})
+		}
+	}, [isSuccess])
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		defaultValues: {
@@ -38,7 +49,11 @@ export const SettingsForm: FC<SettingsFormProps> = () => {
 			title: 'Saved',
 		})
 	}
-	// TODO WakaTime
+
+	const onTest = () => {
+		runTest()
+	}
+
 	return (
 		<Form {...form}>
 			<form className={'space-y-6'} onSubmit={form.handleSubmit(onSubmit)}>
@@ -91,7 +106,12 @@ export const SettingsForm: FC<SettingsFormProps> = () => {
 					control={form.control}
 					name={'Projects'}
 				/>
-				<Button type={'submit'}>Save</Button>
+				<div className={'row justify-between'}>
+					<Button type={'submit'}>Save</Button>
+					<Button onClick={onTest} type={'button'} variant={'outline'}>
+						Test
+					</Button>
+				</div>
 			</form>
 		</Form>
 	)

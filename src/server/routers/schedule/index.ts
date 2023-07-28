@@ -1,6 +1,44 @@
-import { privateProcedure, privateWakaProcedure, router } from 'server/router'
-import { z } from 'zod'
+import { IProject } from 'features/core/schedule/schedule'
+import { createPageInDb } from 'features/core'
+
+import { ReturnRequest } from 'shared'
+
+import { privateProcedure, router } from 'server/router'
+import { TRPCError } from '@trpc/server'
 
 export const scheduleRouter = router({
-	start: privateWakaProcedure.input(z.string()).query(async ({ ctx: { wakaClient }, input }) => {}),
+	test: privateProcedure.mutation(async ({ ctx: { notionClient, prisma, session }, input }) => {
+		const { userId } = session
+
+		const user = await prisma.user.findUnique({
+			select: {
+				notion: {
+					select: { units: { where: { isEnable: true, title: 'Days' } } },
+				},
+			},
+			where: { providerAccountId: userId },
+		})
+
+		if (!user) {
+			throw new TRPCError({ code: 'NOT_FOUND', message: 'User not found' })
+		}
+
+		if (!user.notion?.units) {
+			throw new TRPCError({ code: 'NOT_FOUND', message: 'Databases not found' })
+		}
+
+		user.notion.units.map(async ({ dataId }) => {
+			const project: IProject = {
+				hours: 1,
+				minutes: 30,
+				relation: 'test-relation',
+				startDate: new Date().toISOString(),
+				title: 'test-page',
+			}
+
+			await createPageInDb(notionClient, dataId, project)
+		})
+
+		return ReturnRequest(null, 'created test page')
+	}),
 })

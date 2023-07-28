@@ -1,5 +1,5 @@
 export interface IProjects {
-	data: Datum[]
+	data: ProjectData[]
 	next_page: number
 	page: number
 	prev_page: number
@@ -7,7 +7,7 @@ export interface IProjects {
 	total_pages: number
 }
 
-export interface Datum {
+export interface ProjectData {
 	badge: null
 	clients: any[]
 	color: null

@@ -8,6 +8,8 @@ export interface IAccount {
 	workspace_name: string
 }
 
+const countTables = 3
+
 export const userInit = async (account: IAccount) => {
 	const { access_token, providerAccountId, workspace_id, workspace_name } = account
 
@@ -40,7 +42,6 @@ export const userInit = async (account: IAccount) => {
 		})
 		.filter(Boolean)
 
-	const countTables = 3
 	if (units.length < countTables) {
 		setTimeout(() => {
 			userInit(account)

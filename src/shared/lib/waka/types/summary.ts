@@ -1,7 +1,7 @@
 export interface ISummary {
 	cumulative_total: CumulativeTotal
 	daily_average: DailyAverage
-	data: Datum[]
+	data: SummaryData[]
 	end: string
 	start: string
 }
@@ -23,19 +23,19 @@ export interface DailyAverage {
 	text_including_other_language: string
 }
 
-export interface Datum {
-	categories: Category[]
-	dependencies: Category[]
-	editors: Category[]
+export interface SummaryData {
+	categories: SummaryCategory[]
+	dependencies: SummaryCategory[]
+	editors: SummaryCategory[]
 	grand_total: GrandTotal
-	languages: Category[]
-	machines: Category[]
-	operating_systems: Category[]
-	projects: Category[]
+	languages: SummaryCategory[]
+	machines: SummaryCategory[]
+	operating_systems: SummaryCategory[]
+	projects: SummaryCategory[]
 	range: Range
 }
 
-export interface Category {
+export interface SummaryCategory {
 	color?: null
 	decimal: string
 	digital: string

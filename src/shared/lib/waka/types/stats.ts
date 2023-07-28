@@ -1,17 +1,17 @@
 export interface IStats {
-	data: Data
+	data: StatsData
 }
 
-export interface Data {
+export interface StatsData {
 	best_day: BestDay
-	categories: Category[]
+	categories: StatsCategory[]
 	created_at: string
 	daily_average: number
 	daily_average_including_other_language: number
 	days_including_holidays: number
 	days_minus_holidays: number
-	dependencies: Category[]
-	editors: Category[]
+	dependencies: StatsCategory[]
+	editors: StatsCategory[]
 	end: string
 	holidays: number
 	human_readable_daily_average: string
@@ -27,12 +27,12 @@ export interface Data {
 	is_stuck: boolean
 	is_up_to_date: boolean
 	is_up_to_date_pending_future: boolean
-	languages: Category[]
-	machines: Category[]
+	languages: StatsCategory[]
+	machines: StatsCategory[]
 	modified_at: string
-	operating_systems: Category[]
+	operating_systems: StatsCategory[]
 	percent_calculated: number
-	projects: Category[]
+	projects: StatsCategory[]
 	range: string
 	start: string
 	status: string
@@ -54,7 +54,7 @@ export interface BestDay {
 	total_seconds: number
 }
 
-export interface Category {
+export interface StatsCategory {
 	decimal: string
 	digital: string
 	hours: number

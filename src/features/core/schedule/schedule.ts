@@ -2,6 +2,7 @@ import { createPageInDb } from 'features/core/notion'
 
 import { WakaTimeClient } from 'shared/lib/waka/waka'
 
+import { NotionUnit } from 'prisma-types'
 import { Client } from '@notionhq/client'
 import { prisma } from 'server/prisma'
 
@@ -32,36 +33,49 @@ export const schedule = async () => {
 		if (!notion || !wakaTime) {
 			return
 		}
-		const { accessToken, units } = notion
 
 		const { wakaApiKey } = wakaTime
+		const { accessToken, units } = notion
+
+		if (wakaApiKey === '') {
+			return
+		}
 
 		const wakaClient = new WakaTimeClient(wakaApiKey)
 
 		const notionClient = new Client({ auth: accessToken })
 
-		const statusBar = await wakaClient.getStatusBar().catch(() => false)
-
-		if (typeof statusBar === 'boolean') {
-			return
-		}
-
-		units.map(async ({ dataId }) => {
-			statusBar.data.projects.map(async ({ hours, minutes, name, text, total_seconds }) => {
-				const project: IProject = {
-					hours,
-					minutes,
-					relation: name,
-					startDate: new Date().toISOString(),
-					title: name,
-				}
-
-				await createPageInDb(notionClient, dataId, project)
-			})
-		})
+		await createPages(wakaClient, notionClient, units)
 	})
 
 	const end = Date.now()
 
-	return (end - start) / 1000
+	const rangeTime = (end - start) / 1000
+	return rangeTime
+}
+
+export const createPages = async (
+	wakaClient: WakaTimeClient,
+	notionClient: Client,
+	units: NotionUnit[],
+) => {
+	const statusBar = await wakaClient.getStatusBar().catch(() => false)
+
+	if (typeof statusBar === 'boolean') {
+		return
+	}
+
+	units.map(async ({ dataId }) => {
+		statusBar.data.projects.map(async ({ hours, minutes, name, text, total_seconds }) => {
+			const project: IProject = {
+				hours,
+				minutes,
+				relation: name,
+				startDate: new Date().toISOString(),
+				title: name,
+			}
+
+			await createPageInDb(notionClient, dataId, project)
+		})
+	})
 }

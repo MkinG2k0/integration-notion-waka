@@ -35,18 +35,15 @@ export const Header: FC<HeaderProps> = ({}) => {
 
 const UserAvatar = () => {
 	const { data: session, status } = useSession()
-	const navigate = useRouter()
 	const image = session?.user?.image || ''
 	const name = (session?.user?.name || '').slice(0, 2)
 
 	const onSignOut = () => {
-		signOut().then(() => {
-			navigate.push('/')
-		})
+		signOut({ callbackUrl: '/' })
 	}
 
 	const onSignIn = () => {
-		signIn()
+		signIn('notion', { callbackUrl: '/settings' })
 	}
 
 	if (status === 'loading') {

@@ -1,4 +1,6 @@
 /* eslint react/no-unescaped-entities: 0 */
+import Link from 'next/link'
+
 export default function Home() {
 	return (
 		<div className={'col gap-4'}>

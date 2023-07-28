@@ -20,9 +20,9 @@ export const authOptions: AuthOptions = {
 
 			return token
 		},
-		redirect: ({ baseUrl, url }) => {
-			return BASE_URL.concat('settings')
-		},
+		// redirect: ({ baseUrl, url }) => {
+		// 	return BASE_URL.concat('settings')
+		// },
 		async session({ session, token, user }) {
 			const newSession = session as any
 			newSession.accessToken = token?.accessToken
@@ -43,6 +43,7 @@ export const authOptions: AuthOptions = {
 			redirectUri: BASE_API.concat('auth/callback/notion'),
 		}),
 	],
+
 	session: { strategy: 'jwt' },
 	theme: { colorScheme: 'auto' },
 }
