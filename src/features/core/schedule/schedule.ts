@@ -74,7 +74,6 @@ export const createPages = async (
 				startDate: new Date().toISOString(),
 				title: name,
 			}
-
 			await createPageInDb(notionClient, dataId, project)
 		})
 	})

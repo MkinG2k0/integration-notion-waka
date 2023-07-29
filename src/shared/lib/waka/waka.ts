@@ -152,7 +152,7 @@ export class WakaTimeClient {
 		return data
 	}
 
-	async getStatusBar(userId?: WakaTimePayload.TUserId) {
+	async getStatusBar(userId: WakaTimePayload.TUserId = 'current') {
 		const { data } = await this.api.get<IStatusBar>(`users/${userId}/status_bar/today`)
 		return data
 	}
