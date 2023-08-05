@@ -26,6 +26,7 @@
 .row-sm-col-2 {
 	@apply flex gap-2 max-sm:flex-col;
 }
+
 .row-sm-col-4 {
 	@apply flex gap-4 max-sm:flex-col;
 }
@@ -33,9 +34,11 @@
 .col-sm-row-2 {
 	@apply flex gap-2 max-sm:flex-row flex-col;
 }
+
 .col-sm-row-4 {
 	@apply flex gap-4 max-sm:flex-row flex-col;
 }
+
 //
 .only-sm {
 	@apply sm:hidden;

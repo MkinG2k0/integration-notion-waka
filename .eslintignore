@@ -6,6 +6,3 @@ build
 dist
 node_modules
 cypress
-web
-android
-ios

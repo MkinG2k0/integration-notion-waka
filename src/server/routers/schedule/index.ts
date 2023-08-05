@@ -1,7 +1,7 @@
 import { IProject } from 'features/core/schedule/schedule'
 import { createPageInDb } from 'features/core'
 
-import { ReturnRequest } from 'shared'
+import { returnRequest } from 'shared'
 
 import { privateProcedure, router } from 'server/router'
 import { TRPCError } from '@trpc/server'
@@ -39,6 +39,6 @@ export const scheduleRouter = router({
 			await createPageInDb(notionClient, dataId, project)
 		})
 
-		return ReturnRequest(null, 'created test page')
+		return returnRequest(null, 'created test page')
 	}),
 })

@@ -21,9 +21,7 @@ interface HeaderProps {}
 
 export const Header: FC<HeaderProps> = ({}) => {
 	return (
-		<div
-			className={'row justify-between h-14 items-center border-b  px-4 py-2 text-accent-foreground'}
-		>
+		<div className={'row justify-between h-14 items-center border-b  px-4 py-2 text-accent-foreground'}>
 			<Menu />
 			<div className={'row gap-4 items-center'}>
 				<ModeToggle />
@@ -90,16 +88,12 @@ const Menu = () => {
 					<>
 						<NavigationMenuItem>
 							<Link href={NAV.DASHBOARD} legacyBehavior passHref>
-								<NavigationMenuLink className={navigationMenuTriggerStyle()}>
-									Dashboard
-								</NavigationMenuLink>
+								<NavigationMenuLink className={navigationMenuTriggerStyle()}>Dashboard</NavigationMenuLink>
 							</Link>
 						</NavigationMenuItem>
 						<NavigationMenuItem>
 							<Link href={NAV.SETTINGS} legacyBehavior passHref>
-								<NavigationMenuLink className={navigationMenuTriggerStyle()}>
-									Settings
-								</NavigationMenuLink>
+								<NavigationMenuLink className={navigationMenuTriggerStyle()}>Settings</NavigationMenuLink>
 							</Link>
 						</NavigationMenuItem>
 					</>

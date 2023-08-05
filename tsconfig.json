@@ -9,12 +9,10 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "incremental": true,
+    "allowSyntheticDefaultImports": true,
     "types": [
       "node"
     ],
@@ -27,27 +25,26 @@
       ]
     },
     "lib": [
-      "dom",
-      "dom.iterable",
+      "DOM",
+      "DOM.Iterable",
       "esnext"
     ],
     "plugins": [
       {
         "name": "next"
       }
-    ]
+    ],
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "esModuleInterop": true
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
     "prisma/client/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
-    ".next",
-    ".husky",
-    "prisma/**"
+    "node_modules"
   ]
 }

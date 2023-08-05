@@ -3,6 +3,7 @@ export interface IStatusBar {
 	data: RootObjectData
 	has_team_features: boolean
 }
+
 export interface RootObjectDataCategories {
 	decimal: string
 	digital: string
@@ -14,6 +15,7 @@ export interface RootObjectDataCategories {
 	text: string
 	total_seconds: number
 }
+
 export interface RootObjectDataDependencies {
 	decimal: string
 	digital: string
@@ -25,6 +27,7 @@ export interface RootObjectDataDependencies {
 	text: string
 	total_seconds: number
 }
+
 export interface RootObjectDataEditors {
 	decimal: string
 	digital: string
@@ -36,6 +39,7 @@ export interface RootObjectDataEditors {
 	text: string
 	total_seconds: number
 }
+
 export interface RootObjectDataGrand_total {
 	decimal: string
 	digital: string
@@ -44,6 +48,7 @@ export interface RootObjectDataGrand_total {
 	text: string
 	total_seconds: number
 }
+
 export interface RootObjectDataLanguages {
 	decimal: string
 	digital: string
@@ -55,6 +60,7 @@ export interface RootObjectDataLanguages {
 	text: string
 	total_seconds: number
 }
+
 export interface RootObjectDataMachines {
 	decimal: string
 	digital: string
@@ -67,6 +73,7 @@ export interface RootObjectDataMachines {
 	text: string
 	total_seconds: number
 }
+
 export interface RootObjectDataOperating_systems {
 	decimal: string
 	digital: string
@@ -78,6 +85,7 @@ export interface RootObjectDataOperating_systems {
 	text: string
 	total_seconds: number
 }
+
 export interface RootObjectDataProjects {
 	decimal: string
 	digital: string
@@ -89,6 +97,7 @@ export interface RootObjectDataProjects {
 	text: string
 	total_seconds: number
 }
+
 export interface RootObjectDataRange {
 	date: string
 	end: string
@@ -96,6 +105,7 @@ export interface RootObjectDataRange {
 	text: string
 	timezone: string
 }
+
 export interface RootObjectData {
 	categories: RootObjectDataCategories[]
 	dependencies: RootObjectDataDependencies[]

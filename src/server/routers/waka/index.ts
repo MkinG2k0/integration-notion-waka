@@ -1,9 +1,17 @@
 import { isValidApiKey } from 'shared/lib/waka/is-valid-api-key'
-import { ReturnRequest } from 'shared'
+import { returnRequest } from 'shared'
 
 import { privateProcedure, privateWakaProcedure, router } from 'server/router'
 import { wakaProjectRouter } from 'server/routers/waka/waka-projects'
 import { z } from 'zod'
+
+const unionRange = z.union([
+	z.literal('all_time'),
+	z.literal('last_6_months'),
+	z.literal('last_7_days'),
+	z.literal('last_30_days'),
+	z.literal('last_year'),
+])
 
 export const wakaRouter = router({
 	project: wakaProjectRouter,
@@ -17,25 +25,24 @@ export const wakaRouter = router({
 				const checkValidKey = isValidApiKey(apiKey)
 
 				if (!checkValidKey) {
-					return ReturnRequest(null, `invalid api "${apiKey}" key`, 'invalid_key')
+					return returnRequest(null, `invalid api "${apiKey}" key`, 'invalid_key')
 				}
 
 				const wakaUpdate = await prisma.user.update({
 					data: { wakaTime: { update: { wakaApiKey: apiKey } } },
 					where: { providerAccountId: userId },
 				})
-				return ReturnRequest(wakaUpdate, 'updated')
+				return returnRequest(wakaUpdate, 'updated')
 			}
 
 			const wakaCreate = await prisma.wakaTime.create({ data: { userId, wakaApiKey: apiKey } })
 
-			return ReturnRequest(wakaCreate, 'created')
+			return returnRequest(wakaCreate, 'created')
 		}),
-	stats: privateWakaProcedure.input(z.string()).query(async ({ ctx: { wakaClient }, input }) => {
-		// @ts-ignore TODO input range
+	stats: privateWakaProcedure.input(unionRange).query(async ({ ctx: { wakaClient }, input }) => {
 		const { data } = await wakaClient.getStats({ range: input })
 		data.dependencies = []
-		return ReturnRequest(data, 'last 7 days stats')
+		return returnRequest(data, 'last 7 days stats')
 	}),
 	statusBar: privateWakaProcedure.query(async ({ ctx }) => {
 		const { wakaClient } = ctx
@@ -43,6 +50,6 @@ export const wakaRouter = router({
 		const { data } = await wakaClient.getStatusBar()
 
 		data.dependencies = []
-		return ReturnRequest(data, 'stats now')
+		return returnRequest(data, 'stats now')
 	}),
 })

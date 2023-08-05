@@ -1,4 +1,4 @@
-import { ReturnRequest } from 'shared'
+import { returnRequest } from 'shared'
 
 import { privateProcedure, privateWakaProcedure, router } from 'server/router'
 import { z } from 'zod'
@@ -14,7 +14,7 @@ export const wakaProjectRouter = router({
 			const projects = await wakaClient.getProjects({ page: 1 })
 
 			if (!projects) {
-				return ReturnRequest(null, 'projects not found', 'not_found')
+				return returnRequest(null, 'projects not found', 'not_found')
 			}
 
 			const { total_pages } = projects
@@ -39,7 +39,7 @@ export const wakaProjectRouter = router({
 				})
 			})
 
-			return ReturnRequest(flatProjects, 'all projects')
+			return returnRequest(flatProjects, 'all projects')
 		}),
 	current: privateWakaProcedure
 		.input(z.object({ page: z.number().optional(), query: z.string().optional() }))
@@ -48,6 +48,6 @@ export const wakaProjectRouter = router({
 
 			const data = await wakaClient.getProjects({ page, q: query })
 
-			return ReturnRequest(data, `projects on ${page} page`)
+			return returnRequest(data, `projects on ${page} page`)
 		}),
 })

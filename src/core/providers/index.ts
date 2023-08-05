@@ -5,10 +5,4 @@ import { WithTheme } from 'core/providers/with-theme'
 import compose from 'compose-function'
 import { trpc } from 'server/lib'
 
-export const WithProviders = compose(
-	trpc.withTRPC,
-	WithSession,
-	WithReactQueryDevtools,
-	WithTheme,
-	WithLayout,
-)
+export const WithProviders = compose(trpc.withTRPC, WithSession, WithReactQueryDevtools, WithTheme, WithLayout)

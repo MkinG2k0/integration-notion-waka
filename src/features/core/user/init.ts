@@ -85,10 +85,10 @@ export interface DataBase {
 		type: string
 	}
 	properties: {
-		Day: [Object]
-		Name: [Object]
-		Status: [Object]
-		projects: [Object]
+		Day: [object]
+		Name: [object]
+		Status: [object]
+		projects: [object]
 	}
 	public_url: null
 	title: [

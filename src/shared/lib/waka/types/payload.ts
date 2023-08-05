@@ -12,21 +12,27 @@ export declare namespace WakaTimePayload {
 		memberId: string
 		organizationId: string
 	}
+
 	interface OrgDashboards extends UserId {
 		organizationId: string
 	}
+
 	interface TeamMemberSummary extends UserId, Summary {
 		teamId: string
 		teamMemberId: string
 	}
+
 	interface OrgDashMemSummaries extends OrgDashMemDuration {}
+
 	interface OrgDashMembers extends UserId {
 		dashboardId: string
 		organizationId: string
 	}
+
 	interface TeamMembers extends UserId {
 		teamId: string
 	}
+
 	interface OrgDashMemSum extends UserId {
 		dashboardId: string
 		memberId: string
@@ -67,6 +73,7 @@ export declare namespace WakaTimePayload {
 		date: string
 		project: string
 	}
+
 	interface Leader {
 		language?: null | string
 		pageNumber?: null | string

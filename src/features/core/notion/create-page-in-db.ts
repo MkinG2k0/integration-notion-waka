@@ -7,6 +7,7 @@ export const createPageInDb = async (
 	notionClient: Client,
 	database_id: string,
 	project: IProject,
+	findOrCreate = true,
 ) => {
 	const { endDate, hours, minutes, relation, startDate, title } = project
 
@@ -15,27 +16,29 @@ export const createPageInDb = async (
 	const formatDate = dayjs(startDate).format('DD/MM/YYYY')
 	const customId = `${title}:${formatDate}`
 
-	const searchDay = await notionClient.databases.query({
-		database_id,
-		filter: { property: 'waka_id', rich_text: { equals: customId } },
-	})
-
-	const isFind = searchDay.results[0]
-
-	if (isFind) {
-		const data = await notionClient.pages.update({
-			page_id: isFind.id,
-			properties: {
-				Date: { date: { start: startDate } },
-				hours: { number: hours },
-				minutes: { number: minutes },
-				time: { number: time },
-				title: { title: [{ text: { content: title } }] },
-				waka_id: { rich_text: [{ text: { content: customId } }] },
-			},
+	if (findOrCreate) {
+		const searchDay = await notionClient.databases.query({
+			database_id,
+			filter: { property: 'waka_id', rich_text: { equals: customId } },
 		})
 
-		return data
+		const isFind = searchDay.results[0]
+
+		if (isFind) {
+			const data = await notionClient.pages.update({
+				page_id: isFind.id,
+				properties: {
+					Date: { date: { start: startDate } },
+					hours: { number: hours },
+					minutes: { number: minutes },
+					time: { number: time },
+					title: { title: [{ text: { content: title } }] },
+					waka_id: { rich_text: [{ text: { content: customId } }] },
+				},
+			})
+
+			return data
+		}
 	}
 
 	const data = await notionClient.pages.create({

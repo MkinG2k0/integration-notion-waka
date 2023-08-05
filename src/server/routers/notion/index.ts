@@ -1,6 +1,7 @@
-import { ReturnRequest } from 'shared'
+import { returnRequest } from 'shared'
 
 import { wakaProjectRouter } from 'server/routers/waka/waka-projects'
+import { daysRouter } from 'server/routers/notion/days-parse'
 import { privateProcedure, router } from 'server/router'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
@@ -44,8 +45,9 @@ export const notionRouter = router({
 			result[title] = { dataId, id, title }
 		})
 
-		return ReturnRequest(result, 'get')
+		return returnRequest(result, 'get')
 	}),
+	parse: daysRouter,
 	project: wakaProjectRouter,
 	setDatabaseId: privateProcedure
 		.input(
@@ -73,6 +75,6 @@ export const notionRouter = router({
 
 			await Promise.all([daysUnit, ProjectsUnit, wakaTime])
 
-			return ReturnRequest(null, 'updated')
+			return returnRequest(null, 'updated')
 		}),
 })

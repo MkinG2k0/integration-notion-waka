@@ -88,8 +88,7 @@ export class WakaTimeClient {
 	async getOrganizationDashboardMemberDurations(payload: WakaTimePayload.OrgDashMemDuration) {
 		const { dashboardId, memberId, organizationId, userId = 'current' } = payload
 		const { data } = await this.api.get(
-			`users/${userId}/orgs/${organizationId}` +
-				`/dashboards/${dashboardId}/members/${memberId}/durations`,
+			`users/${userId}/orgs/${organizationId}` + `/dashboards/${dashboardId}/members/${memberId}/durations`,
 		)
 		return data
 	}
@@ -97,17 +96,14 @@ export class WakaTimeClient {
 	async getOrganizationDashboardMemberSummaries(payload: WakaTimePayload.OrgDashMemSummaries) {
 		const { dashboardId, memberId, organizationId, userId = 'current' } = payload
 		const { data } = await this.api.get(
-			`users/${userId}/orgs/${organizationId}/` +
-				`dashboards/${dashboardId}/members/${memberId}/summaries`,
+			`users/${userId}/orgs/${organizationId}/` + `dashboards/${dashboardId}/members/${memberId}/summaries`,
 		)
 		return data
 	}
 
 	async getOrganizationDashboardMembers(payload: WakaTimePayload.OrgDashMembers) {
 		const { dashboardId, organizationId, userId = 'current' } = payload
-		const { data } = await this.api.get(
-			`users/${userId}/orgs/${organizationId}/dashboards/${dashboardId}/members`,
-		)
+		const { data } = await this.api.get(`users/${userId}/orgs/${organizationId}/dashboards/${dashboardId}/members`)
 		return data
 	}
 
@@ -132,13 +128,7 @@ export class WakaTimeClient {
 	}
 
 	async getStats(payload: WakaTimePayload.Stats) {
-		const {
-			project = null,
-			range,
-			timeout = null,
-			userId = 'current',
-			writes_only = null,
-		} = payload
+		const { project = null, range, timeout = null, userId = 'current', writes_only = null } = payload
 		const keyRange = rangeQueryParameters[range]
 
 		const { data } = await this.api.get<IStats>(`users/${userId}/stats/${keyRange}`, {
@@ -175,17 +165,14 @@ export class WakaTimeClient {
 	async getTeamMemberSummary(payload: WakaTimePayload.TeamMemberSummary) {
 		const { branches = [], end, project, start, teamId, teamMemberId, userId = 'current' } = payload
 
-		const { data } = await this.api.get(
-			`users/${userId}/teams/${teamId}/members/${teamMemberId}/summaries`,
-			{
-				params: {
-					branches: branches.join(','),
-					end,
-					project,
-					start,
-				},
+		const { data } = await this.api.get(`users/${userId}/teams/${teamId}/members/${teamMemberId}/summaries`, {
+			params: {
+				branches: branches.join(','),
+				end,
+				project,
+				start,
 			},
-		)
+		})
 		return data
 	}
 

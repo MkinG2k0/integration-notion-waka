@@ -20,9 +20,7 @@ export const wakaClient = t.middleware(async ({ ctx, next, path }) => {
 
 	const isPathSetWakaToken = path === 'waka.setToken'
 
-	const wakaKey = isPathSetWakaToken
-		? req.body['0'].json.apiKey
-		: wakaFind.wakaTime?.wakaApiKey || ''
+	const wakaKey = isPathSetWakaToken ? req.body['0'].json.apiKey : wakaFind.wakaTime?.wakaApiKey || ''
 
 	const wakaClient = new WakaTimeClient(wakaKey)
 

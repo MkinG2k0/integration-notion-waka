@@ -8,13 +8,7 @@ const themes = ['light', 'dark', 'system', 'green']
 
 export const WithTheme = (component: FC) => (props) => {
 	return (
-		<ThemeProvider
-			attribute={'class'}
-			defaultTheme={'system'}
-			enableSystem
-			themes={themes}
-			{...props}
-		>
+		<ThemeProvider attribute={'class'} defaultTheme={'system'} enableSystem themes={themes} {...props}>
 			{component(props)}
 			<Toaster />
 		</ThemeProvider>

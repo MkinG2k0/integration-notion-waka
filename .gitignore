@@ -17,6 +17,7 @@
 
 # production
 /build
+dist
 
 # misc
 .DS_Store
@@ -40,12 +41,4 @@ yarn-error.log*
 next-env.d.ts
 
 pnpm-lock.yaml
-
-# prisma
-prisma/client
-#prisma/migrations
-prisma/dev.db
-
-# test
-src/tests/read-json/*.json
 

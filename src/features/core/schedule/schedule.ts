@@ -54,11 +54,7 @@ export const schedule = async () => {
 	return rangeTime
 }
 
-export const createPages = async (
-	wakaClient: WakaTimeClient,
-	notionClient: Client,
-	units: NotionUnit[],
-) => {
+export const createPages = async (wakaClient: WakaTimeClient, notionClient: Client, units: NotionUnit[]) => {
 	const statusBar = await wakaClient.getStatusBar().catch(() => false)
 
 	if (typeof statusBar === 'boolean') {
