@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./client"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  directUrl         = env("DIRECT_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id                String    @id @default(cuid())
+  name              String
+  providerAccountId String    @unique
+  notion            Notion?
+  wakaTime          WakaTime?
+}
+
+model Notion {
+  id String @id @unique
+
+  units       NotionUnit[]
+  accessToken String
+
+  workspaceId String @unique
+  // relation
+  User        User   @relation(fields: [userId], references: [id])
+  userId      String @unique
+}
+
+model WakaTime {
+  id String @id @default(cuid())
+
+  wakaApiKey String
+  // relation
+  User       User   @relation(fields: [userId], references: [id])
+  userId     String @unique
+}
+
+model NotionUnit {
+  id       String  @id @default(cuid())
+  dataId   String  @unique
+  type     String
+  isEnable Boolean @default(true)
+  title    String
+  Notion   Notion? @relation(fields: [notionId], references: [id])
+  notionId String?
+}
